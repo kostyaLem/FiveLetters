@@ -5,12 +5,18 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\config.png" />
 	  <None Remove="Resources\Images\help.png" />
+	  <None Remove="Resources\Images\icon.ico" />
 	  <None Remove="Resources\Images\top.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="icon.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,6 +28,7 @@
 	<ItemGroup>
 	  <Resource Include="Resources\Images\config.png" />
 	  <Resource Include="Resources\Images\help.png" />
+	  <Resource Include="Resources\Images\icon.ico" />
 	  <Resource Include="Resources\Images\top.png" />
 	</ItemGroup>
 

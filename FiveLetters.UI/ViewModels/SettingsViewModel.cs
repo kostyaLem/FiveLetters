@@ -19,5 +19,7 @@ internal sealed class SettingsViewModel : ViewModelBase
         FilePath = settings.FilePath.LocalPath;
         WordLength = settings.WordLength;
         Language = settings.LangMode;
+
+        AcceptCommand = new DelegateCommand(() => IsAccepted = true);
     }
 }
