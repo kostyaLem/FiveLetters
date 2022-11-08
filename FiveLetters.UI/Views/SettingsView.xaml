@@ -9,6 +9,7 @@
     Width="500"
     Height="315"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <StackPanel Margin="10">
         <StackPanel>
@@ -17,23 +18,42 @@
                 Margin="0,2,0,10"
                 DecimalPlaces="0"
                 Maximum="8"
-                Minimum="3" />
+                Minimum="3"
+                Value="{Binding WordLength}" />
         </StackPanel>
 
         <StackPanel>
             <Label HorizontalAlignment="Left" Content="Путь к файлу:" />
             <DockPanel Margin="0,2,0,10" LastChildFill="True">
                 <Button Width="30" DockPanel.Dock="Right" />
-                <hc:TextBox Margin="0,0,10,0" />
+                <hc:TextBox
+                    Margin="0,0,10,0"
+                    IsReadOnly="True"
+                    Text="{Binding FilePath}"
+                    ToolTip="{Binding FilePath}" />
             </DockPanel>
         </StackPanel>
 
         <StackPanel>
             <Label HorizontalAlignment="Left" Content="Язык слов в игре:" />
-            <UniformGrid Margin="0,15,0,5">
-                <RadioButton Content="Русский" />
-                <RadioButton Content="English" />
-            </UniformGrid>
+            <ToggleButton
+                Margin="0,15,0,5"
+                HorizontalAlignment="Left"
+                IsChecked="False">
+                <ToggleButton.Style>
+                    <Style BasedOn="{StaticResource ToggleButtonSwitch}" TargetType="ToggleButton">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                                <Setter Property="Content" Value="English" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="False">
+                                <Setter Property="Content" Value="Русский" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
         </StackPanel>
 
         <UniformGrid Width="200">

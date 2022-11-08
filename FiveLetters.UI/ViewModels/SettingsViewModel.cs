@@ -16,7 +16,7 @@ internal sealed class SettingsViewModel : ViewModelBase
 
     public SettingsViewModel(Settings settings)
     {
-        FilePath = settings.FilePath.AbsolutePath;
+        FilePath = settings.FilePath.LocalPath;
         WordLength = settings.WordLength;
         Language = settings.LangMode;
     }

@@ -4,8 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:FiveLetters.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:hc="https://handyorg.github.io/handycontrol"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="550"
     Height="600"
     ResizeMode="NoResize"
@@ -13,6 +14,12 @@
     mc:Ignorable="d">
 
     <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition />
+            <RowDefinition Height="120" />
+        </Grid.RowDefinitions>
 
         <Border
             Grid.RowSpan="3"
@@ -22,12 +29,6 @@
             Visibility="{Binding Path=IsUploading, Converter={dxmvvm:BooleanToVisibilityConverter}}">
             <hc:LoadingIndicator Style="{StaticResource LoadingIndicatorArcsStyle}" />
         </Border>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition />
-            <RowDefinition Height="120" />
-        </Grid.RowDefinitions>
 
         <StackPanel
             Grid.Row="0"

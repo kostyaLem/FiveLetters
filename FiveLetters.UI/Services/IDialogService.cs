@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using HandyControl.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -12,17 +13,18 @@ internal interface IDialogService
 
 internal sealed class DialogService : IDialogService
 {
-    private readonly IDictionary<Type, Window> _viewsMap;
+    private readonly IDictionary<Type, Type> _viewsMap;
 
-    public DialogService(IDictionary<Type, Window> viewsMap)
+    public DialogService(IDictionary<Type, Type> viewsMap)
     {
         _viewsMap = viewsMap;
     }
 
     public void ShowDialog<T>() where T : ViewModelBase
     {
-        if (_viewsMap.TryGetValue(typeof(T), out var view))
+        if (_viewsMap.TryGetValue(typeof(T), out var viewType))
         {
+            var view = (Window)App.ServiceProvider.GetRequiredService(viewType);
             view.ShowDialog();
             return;                        
         }
