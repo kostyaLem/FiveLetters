@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FiveLetters.UI;
+
 public class Configuration
 {
 
