@@ -14,11 +14,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Converters\" />
-		<Folder Include="Helpers\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="DevExpressMvvm" Version="22.1.3" />
 		<PackageReference Include="HandyControls" Version="3.4.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
@@ -28,5 +23,9 @@
 	  <Resource Include="Resources\Images\config.png" />
 	  <Resource Include="Resources\Images\help.png" />
 	  <Resource Include="Resources\Images\top.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
 	</ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Controls;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input;
 
 namespace FiveLetters.UI.ViewModels;
@@ -28,5 +27,16 @@ internal class MainViewModel : BindableBase
     private void LettersClicked(LetterRoutedEventArgs args)
     {
         Debug.WriteLine(args.Letter);
+    }
+}
+
+internal sealed class SettingsViewModel : BindableBase
+{
+    public string FilePath { get; set; }
+    public int WordLength { get; set; }
+
+    public SettingsViewModel()
+    {
+
     }
 }
