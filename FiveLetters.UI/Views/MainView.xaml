@@ -11,6 +11,9 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+
+
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
@@ -71,7 +74,14 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2">
-            <controls:CustomKeyboard />
+            <controls:CustomKeyboard>
+                <hc:Interaction.Triggers>
+                    <hc:EventTrigger EventName="LetterClick">
+                        <hc:EventToCommand Command="{Binding LettersClickedCommand}" PassEventArgsToCommand="True" />
+                    </hc:EventTrigger>
+                </hc:Interaction.Triggers>
+            </controls:CustomKeyboard>
         </StackPanel>
+
     </Grid>
 </hc:Window>

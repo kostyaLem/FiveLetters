@@ -35,6 +35,7 @@
                                     Width="40"
                                     Height="40"
                                     hc:BorderElement.CornerRadius="10"
+                                    Click="Button_Click"
                                     Content="{Binding Path=.}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

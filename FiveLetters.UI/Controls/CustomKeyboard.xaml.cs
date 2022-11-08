@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,6 +7,18 @@ namespace FiveLetters.UI.Controls;
 
 public partial class CustomKeyboard : UserControl
 {
+    public static readonly RoutedEvent LetterClickEvent = EventManager.RegisterRoutedEvent(
+        name: "LetterClick",
+        routingStrategy: RoutingStrategy.Bubble,
+        handlerType: typeof(RoutedEventHandler),
+        ownerType: typeof(CustomKeyboard));
+
+    public event RoutedEventHandler LetterClick
+    {
+        add { AddHandler(LetterClickEvent, value); }
+        remove { RemoveHandler(LetterClickEvent, value); }
+    }
+
     public static readonly DependencyProperty IsRusLangProperty
         = DependencyProperty.Register("IsRusLang", typeof(bool), typeof(CustomKeyboard), new() { DefaultValue = true });
 
@@ -47,5 +60,23 @@ public partial class CustomKeyboard : UserControl
                 "ZXCVBNM".Select(x=>x).ToArray()
             };
         }
+    }
+
+    private void RaiseCustomRoutedEvent(char letter)
+    {
+        LetterRoutedEventArgs routedEventArgs = new(letter)
+        {
+            RoutedEvent = LetterClickEvent
+        };
+
+        RaiseEvent(routedEventArgs);
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        var btn = sender as Button;
+        var letter = (char)btn.Content;
+
+        RaiseCustomRoutedEvent(letter);
     }
 }
