@@ -5,7 +5,7 @@
     xmlns:controls="clr-namespace:FiveLetters.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     Width="550"
     Height="600"
     ResizeMode="NoResize"
@@ -13,6 +13,16 @@
     mc:Ignorable="d">
 
     <Grid Margin="10">
+
+        <Border
+            Grid.RowSpan="3"
+            Panel.ZIndex="10"
+            Background="#33000000"
+            CornerRadius="10"
+            Visibility="{Binding Path=IsUploading, Converter={dxmvvm:BooleanToVisibilityConverter}}">
+            <hc:LoadingIndicator Style="{StaticResource LoadingIndicatorArcsStyle}" />
+        </Border>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition />
@@ -62,7 +72,7 @@
             <Button ToolTip="Рейтинг">
                 <Image Source="{StaticResource TopImage}" />
             </Button>
-            <Button ToolTip="Настройки">
+            <Button Command="{Binding OpenSettingsCommand}" ToolTip="Настройки">
                 <Image Source="{StaticResource ConfigImage}" />
             </Button>
             <Button ToolTip="Правила">

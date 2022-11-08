@@ -8,4 +8,14 @@ public partial class SettingsView : Window
     {
         InitializeComponent();
     }
+
+    private void BtnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+    private void BtnSave_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        this.Close();
+    }
 }

@@ -1,42 +1,69 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Controls;
+using FiveLetters.UI.Models;
 using System.Diagnostics;
 using System.Windows.Input;
+using IDialogService = FiveLetters.UI.Services.IDialogService;
 
 namespace FiveLetters.UI.ViewModels;
 
 internal class MainViewModel : BindableBase
 {
+    private readonly SettingsViewModel _settingsViewModel;
+    private readonly IDialogService _dialogService;
+
+    public bool IsUploading
+    {
+        get => GetValue<bool>(nameof(IsUploading));
+        set => SetValue(value, nameof(IsUploading));
+    }
+
     public int LettersCount
     {
         get => GetValue<int>(nameof(LettersCount));
         set => SetValue(value, nameof(LettersCount));
     }
 
+    public LangMode LangMode
+    {
+        get => GetValue<LangMode>(nameof(LangMode));
+        set => SetValue(value, nameof(LangMode));
+    }
+
     public ICommand LettersClickedCommand { get; }
 
-    public ICommand OpenRates { get; }
-    public ICommand OpenSettings { get; }
-    public ICommand OpenHelp { get; }
+    public ICommand OpenRatesCommand { get; }
+    public ICommand OpenSettingsCommand { get; }
+    public ICommand OpenHelpCommand { get; }
 
-    public MainViewModel()
+    public MainViewModel(SettingsViewModel settingsViewModel, IDialogService dialogService)
     {
+        _settingsViewModel = settingsViewModel;
+        _dialogService = dialogService;
+
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
+        OpenSettingsCommand = new DelegateCommand(OpenSettings);
     }
 
     private void LettersClicked(LetterRoutedEventArgs args)
     {
         Debug.WriteLine(args.Letter);
     }
-}
 
-internal sealed class SettingsViewModel : BindableBase
-{
-    public string FilePath { get; set; }
-    public int WordLength { get; set; }
-
-    public SettingsViewModel()
+    private void OpenSettings()
     {
+        IsUploading = true;
 
+        _dialogService.ShowDialog<SettingsViewModel>();
+
+        if (_settingsViewModel.IsAccepted)
+        {
+            LettersCount = _settingsViewModel.WordLength;
+            LangMode = _settingsViewModel.Language;
+
+            // Load words and refresh UI
+        }
+
+        IsUploading = false;
     }
 }

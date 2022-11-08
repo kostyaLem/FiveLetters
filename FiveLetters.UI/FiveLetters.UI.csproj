@@ -24,8 +24,4 @@
 	  <Resource Include="Resources\Images\help.png" />
 	  <Resource Include="Resources\Images\top.png" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
 </Project>

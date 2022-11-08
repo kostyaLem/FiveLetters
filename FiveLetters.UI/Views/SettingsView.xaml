@@ -37,8 +37,15 @@
         </StackPanel>
 
         <UniformGrid Width="200">
-            <Button Content="Отменить" />
-            <Button Content="Сохранить" />
+            <Button
+                x:Name="BtnCancel"
+                Click="BtnCancel_Click"
+                Content="Отменить" />
+            <Button
+                x:Name="BtnSave"
+                Click="BtnSave_Click"
+                Command="{Binding AcceptCommand}"
+                Content="Сохранить" />
         </UniformGrid>
     </StackPanel>
 </hc:Window>
