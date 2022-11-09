@@ -1,5 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Models;
+using Microsoft.Win32;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FiveLetters.UI.ViewModels;
@@ -13,6 +15,7 @@ internal sealed class SettingsViewModel : ViewModelBase
     public bool IsAccepted { get; private set; } 
 
     public ICommand AcceptCommand { get; }
+    public ICommand SelectFileCommand { get; }
 
     public SettingsViewModel(Settings settings)
     {
@@ -21,5 +24,20 @@ internal sealed class SettingsViewModel : ViewModelBase
         Language = settings.LangMode;
 
         AcceptCommand = new DelegateCommand(() => IsAccepted = true);
+        SelectFileCommand = new DelegateCommand(SelectFile);
+    }
+
+    private void SelectFile()
+    {
+        var dialog = new OpenFileDialog();
+        dialog.Filter = "TXT (*.txt)|*.txt";
+        // Открыть диалоговое окно выбора файла
+        var result = dialog.ShowDialog();
+
+        if (result.HasValue && result.Value)
+        {
+            FilePath = dialog.FileName;
+            RaisePropertiesChanged(nameof(FilePath));
+        }
     }
 }

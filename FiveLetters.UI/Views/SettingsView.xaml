@@ -27,7 +27,15 @@
         <StackPanel>
             <Label HorizontalAlignment="Left" Content="Путь к файлу:" />
             <DockPanel Margin="0,2,0,10" LastChildFill="True">
-                <Button Width="30" DockPanel.Dock="Right" />
+                <Button
+                    Width="30"
+                    Padding="2"
+                    Background="Transparent"
+                    Command="{Binding SelectFileCommand}"
+                    DockPanel.Dock="Right"
+                    ToolTip="Выбрать файл">
+                    <Image Source="{StaticResource FolderImage}" Stretch="UniformToFill" />
+                </Button>
                 <hc:TextBox
                     Margin="0,0,10,0"
                     IsReadOnly="True"

@@ -26,7 +26,7 @@
         <Border
             Grid.RowSpan="3"
             Panel.ZIndex="10"
-            Background="#33000000"
+            Background="#66000000"
             CornerRadius="10"
             Visibility="{Binding Path=IsUploading, Converter={dxmvvm:BooleanToVisibilityConverter}}">
             <hc:LoadingIndicator Style="{StaticResource LoadingIndicatorArcsStyle}" />

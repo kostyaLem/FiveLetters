@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\config.png" />
+	  <None Remove="Resources\Images\folder.png" />
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\icon.ico" />
 	  <None Remove="Resources\Images\top.png" />
@@ -27,6 +28,7 @@
 
 	<ItemGroup>
 	  <Resource Include="Resources\Images\config.png" />
+	  <Resource Include="Resources\Images\folder.png" />
 	  <Resource Include="Resources\Images\help.png" />
 	  <Resource Include="Resources\Images\icon.ico" />
 	  <Resource Include="Resources\Images\top.png" />

@@ -2,5 +2,6 @@
     <BitmapImage x:Key="HelpImage" UriSource="Images\help.png" />
     <BitmapImage x:Key="ConfigImage" UriSource="Images\config.png" />
     <BitmapImage x:Key="TopImage" UriSource="Images\top.png" />
+    <BitmapImage x:Key="FolderImage" UriSource="Images\folder.png" />
     <BitmapImage x:Key="IconImage" UriSource="Images\icon.ico" />
 </ResourceDictionary>
