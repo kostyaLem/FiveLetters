@@ -1,6 +1,6 @@
 ﻿using FiveLetters.BL.Models;
 
-namespace FiveLetters.BL.Services;
+namespace FiveLetters.BL.Services.Readers;
 
 internal sealed class WordReader
 {

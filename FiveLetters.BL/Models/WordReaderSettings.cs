@@ -17,5 +17,9 @@ public record WordReaderSettings
         {
             throw new ArgumentException(nameof(lettersCount));
         }
+
+        FilePath = filePath;
+        LangMode = langMode;
+        LettersCount = lettersCount;
     }
 }

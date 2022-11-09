@@ -1,4 +1,4 @@
-﻿namespace FiveLetters.BL.Services;
+﻿namespace FiveLetters.BL.Services.Readers;
 
 internal static class StringReader
 {
@@ -14,7 +14,7 @@ internal static class StringReader
 
         while (stream.EndOfStream)
         {
-            strs.Add((await stream.ReadLineAsync()) ?? string.Empty);
+            strs.Add(await stream.ReadLineAsync() ?? string.Empty);
         }
 
         return strs;
