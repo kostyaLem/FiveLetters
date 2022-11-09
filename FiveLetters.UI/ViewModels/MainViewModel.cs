@@ -41,6 +41,9 @@ internal class MainViewModel : BindableBase
         _settingsViewModel = settingsViewModel;
         _dialogService = dialogService;
 
+        LettersCount = _settingsViewModel.WordLength;
+        LangMode = _settingsViewModel.LangMode;
+
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
         OpenSettingsCommand = new DelegateCommand(OpenSettings);
     }

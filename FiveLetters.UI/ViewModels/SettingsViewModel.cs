@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Models;
 using Microsoft.Win32;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FiveLetters.UI.ViewModels;
