@@ -1,6 +1,6 @@
 ﻿namespace FiveLetters.BL.Services;
 
-internal enum LetterState
+public enum LetterState
 {
     NotGuessed,
     Wrong,
@@ -8,18 +8,20 @@ internal enum LetterState
     Guessed
 }
 
-internal sealed class Game
+public sealed record Attempt(bool IsGuessed, IReadOnlyList<(char, LetterState)> Letters);
+
+public sealed class GameProcessor
 {
     private readonly string _word;
 
-    public Game(string word)
+    public GameProcessor(string word)
     {
         _word = word;
     }
 
-    public IReadOnlyList<(char, LetterState)> TryGuess(string word)
+    public Attempt TryGuess(string word)
     {
-        var states = new List<(char, LetterState)>();
+        var states = new List<(char Ch, LetterState State)>();
 
         for (int i = 0; i < word.Length; i++)
         {
@@ -32,7 +34,8 @@ internal sealed class Game
             if (_word.Contains(word[i]))
             {
                 var guessedCount = states
-                    .Count(x => x == (word[i], LetterState.Guessed));
+                    .Count(x => x == (word[i], LetterState.Guessed)
+                             || x == (word[i], LetterState.Nearly));
 
                 var allCount = word.Count(x => x == word[i]);
 
@@ -46,6 +49,6 @@ internal sealed class Game
             states.Add((_word[i], LetterState.Wrong));
         }
 
-        return states;
+        return new(states.All(x => x.State == LetterState.Guessed), states);
     }
 }
