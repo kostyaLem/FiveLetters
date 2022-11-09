@@ -10,7 +10,7 @@ internal sealed class SettingsViewModel : ViewModelBase
 {
     public string FilePath { get; set; }
     public int WordLength { get; set; }
-    public LangMode Language { get; set; }
+    public LangMode LangMode { get; set; }
 
     public bool IsAccepted { get; private set; } 
 
@@ -21,7 +21,7 @@ internal sealed class SettingsViewModel : ViewModelBase
     {
         FilePath = settings.FilePath.LocalPath;
         WordLength = settings.WordLength;
-        Language = settings.LangMode;
+        LangMode = settings.LangMode;
 
         AcceptCommand = new DelegateCommand(() => IsAccepted = true);
         SelectFileCommand = new DelegateCommand(SelectFile);

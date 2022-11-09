@@ -59,7 +59,7 @@ internal class MainViewModel : BindableBase
         if (_settingsViewModel.IsAccepted)
         {
             LettersCount = _settingsViewModel.WordLength;
-            LangMode = _settingsViewModel.Language;
+            LangMode = _settingsViewModel.LangMode;
 
             // Load words and refresh UI
         }

@@ -2,6 +2,7 @@
     x:Class="FiveLetters.UI.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:FiveLetters.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:FiveLetters.UI.Views"
@@ -49,16 +50,16 @@
             <ToggleButton
                 Margin="0,15,0,5"
                 HorizontalAlignment="Left"
-                IsChecked="False">
+                IsChecked="{Binding LangMode, Converter={converters:BoolToLangModeEnumConverter}}">
                 <ToggleButton.Style>
                     <Style BasedOn="{StaticResource ToggleButtonSwitch}" TargetType="ToggleButton">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="True">
-                                <Setter Property="Content" Value="English" />
+                                <Setter Property="Content" Value="Русский" />
                             </DataTrigger>
 
                             <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="False">
-                                <Setter Property="Content" Value="Русский" />
+                                <Setter Property="Content" Value="English" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
