@@ -7,6 +7,8 @@
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:FiveLetters.UI.Models"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
     Title="Игра в слова"
     Width="550"
     Height="600"
@@ -83,6 +85,35 @@
             </Button>
 
         </StackPanel>
+
+        <ItemsControl
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            ItemsSource="{Binding Attempts}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding Letters}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Width="40"
+                                    Height="40"
+                                    Margin="10,5"
+                                    Content="{Binding SelectedLetter}"
+                                    IsEnabled="False" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
 
         <StackPanel Grid.Row="2">
             <controls:CustomKeyboard>

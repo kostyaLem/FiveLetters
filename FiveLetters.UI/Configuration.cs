@@ -1,4 +1,6 @@
-﻿using FiveLetters.UI.Models;
+﻿using FiveLetters.BL.Services;
+using FiveLetters.BL.Services.Readers;
+using FiveLetters.UI.Models;
 using FiveLetters.UI.Services;
 using FiveLetters.UI.ViewModels;
 using FiveLetters.UI.Views;
@@ -18,6 +20,8 @@ public static class Configuration
         serviceSollection.AddSingleton<SettingsViewModel>();
 
         serviceSollection.AddSingleton<MainView>();
+        serviceSollection.AddSingleton<GameProcessor>(); // перенести в BL
+        serviceSollection.AddSingleton<WordReader>(); // перенести в BL
         serviceSollection.AddTransient<SettingsView>();
 
         serviceSollection.AddSingleton<IDialogService>(x =>

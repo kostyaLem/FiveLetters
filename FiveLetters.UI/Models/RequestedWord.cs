@@ -1,4 +1,4 @@
-﻿using System;
+﻿using HandyControl.Tools.Extension;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -6,15 +6,19 @@ namespace FiveLetters.UI.Models;
 
 internal class RequestedWord
 {
-    public ObservableCollection<RequestedLetter> Characters { get; }
+    public ObservableCollection<RequestedLetter> Letters { get; }
 
-    public RequestedWord(string word)
+    public bool IsFinished => Letters.All(x => x.SelectedLetter is not null);
+
+    public RequestedWord()
     {
-        if (string.IsNullOrWhiteSpace(word))
-        {
-            throw new ArgumentNullException(nameof(word));
-        }
+        var letters = Enumerable.Range(0, 7).Select(x => new RequestedLetter());
+        Letters = new ObservableCollection<RequestedLetter>(letters);
+    }
 
-        Characters = new(word.Select(ch => new RequestedLetter(word, ch)));
+    public RequestedWord(int wordLength)
+    {
+        var letters = Enumerable.Range(0, wordLength).Select(x => new RequestedLetter());
+        Letters = new ObservableCollection<RequestedLetter>(letters);
     }
 }

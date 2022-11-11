@@ -27,6 +27,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\FiveLetters.BL\FiveLetters.BL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Resource Include="Resources\Images\config.png" />
 	  <Resource Include="Resources\Images\folder.png" />
 	  <Resource Include="Resources\Images\help.png" />

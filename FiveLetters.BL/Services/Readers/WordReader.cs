@@ -2,7 +2,7 @@
 
 namespace FiveLetters.BL.Services.Readers;
 
-internal sealed class WordReader
+public sealed class WordReader
 {
     public async Task<IReadOnlyList<string>> ReadWords(WordReaderSettings settings)
     {

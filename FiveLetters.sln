@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiveLetters.UI", "FiveLetters.UI\FiveLetters.UI.csproj", "{2E3E663C-1631-4B64-9AC5-BF5ABA0DBFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiveLetters.BL", "FiveLetters.BL\FiveLetters.BL.csproj", "{B7D408B2-1098-46AA-89FE-12425B2984A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiveLetters.BL", "FiveLetters.BL\FiveLetters.BL.csproj", "{B7D408B2-1098-46AA-89FE-12425B2984A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

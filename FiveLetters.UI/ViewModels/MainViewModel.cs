@@ -1,7 +1,10 @@
 ﻿using DevExpress.Mvvm;
+using FiveLetters.BL.Services;
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 using IDialogService = FiveLetters.UI.Services.IDialogService;
 
@@ -10,7 +13,14 @@ namespace FiveLetters.UI.ViewModels;
 internal class MainViewModel : BindableBase
 {
     private readonly SettingsViewModel _settingsViewModel;
+    private readonly GameProcessor _gameProcessor;
     private readonly IDialogService _dialogService;
+
+    public IReadOnlyList<RequestedWord> Attempts
+    {
+        get => GetValue<IReadOnlyList<RequestedWord>>(nameof(Attempts));
+        set => SetValue(value, nameof(Attempts));
+    }
 
     public bool IsUploading
     {
@@ -36,9 +46,13 @@ internal class MainViewModel : BindableBase
     public ICommand OpenSettingsCommand { get; }
     public ICommand OpenHelpCommand { get; }
 
-    public MainViewModel(SettingsViewModel settingsViewModel, IDialogService dialogService)
+    public MainViewModel(
+        SettingsViewModel settingsViewModel,
+        GameProcessor gameProcessor,
+        IDialogService dialogService)
     {
         _settingsViewModel = settingsViewModel;
+        _gameProcessor = gameProcessor;
         _dialogService = dialogService;
 
         LettersCount = _settingsViewModel.WordLength;
@@ -46,6 +60,8 @@ internal class MainViewModel : BindableBase
 
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
         OpenSettingsCommand = new DelegateCommand(OpenSettings);
+
+        Attempts = new List<RequestedWord>(Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount)));
     }
 
     private void LettersClicked(LetterRoutedEventArgs args)
@@ -63,8 +79,8 @@ internal class MainViewModel : BindableBase
         {
             LettersCount = _settingsViewModel.WordLength;
             LangMode = _settingsViewModel.LangMode;
-
-            // Load words and refresh UI
+            Attempts = new List<RequestedWord>(
+                Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount)));
         }
 
         IsUploading = false;
