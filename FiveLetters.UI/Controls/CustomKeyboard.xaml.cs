@@ -1,4 +1,4 @@
-﻿using System;
+﻿using FiveLetters.UI.Models;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,13 +19,16 @@ public partial class CustomKeyboard : UserControl
         remove { RemoveHandler(LetterClickEvent, value); }
     }
 
-    public static readonly DependencyProperty IsRusLangProperty
-        = DependencyProperty.Register("IsRusLang", typeof(bool), typeof(CustomKeyboard), new() { DefaultValue = true });
+    public static readonly DependencyProperty LangModeProperty
+        = DependencyProperty.Register("LangMode", typeof(LangMode), typeof(CustomKeyboard), 
+            new() { 
+                DefaultValue = LangMode.Rus, 
+                PropertyChangedCallback = new PropertyChangedCallback(LangModeChanged)});
 
-    public bool IsRusLang
+    public LangMode LangMode
     {
-        get => (bool)GetValue(IsRusLangProperty);
-        set => SetValue(IsRusLangProperty, value);
+        get => (LangMode)GetValue(LangModeProperty);
+        set => SetValue(LangModeProperty, value);
     }
 
     public CustomKeyboard()
@@ -34,15 +37,23 @@ public partial class CustomKeyboard : UserControl
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        => UpdateKeyboard();
+
+    private static void LangModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var keyboard = (CustomKeyboard)d;
+        keyboard.UpdateKeyboard();
+    }
+
+    private void UpdateKeyboard()
     {
         var letters = GetLetters();
-
         Rows.ItemsSource = letters;
     }
 
     private char[][] GetLetters()
     {
-        if (IsRusLang)
+        if (LangMode == LangMode.Rus)
         {
             return new char[][]
             {

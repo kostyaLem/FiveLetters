@@ -116,7 +116,7 @@
         </ItemsControl>
 
         <StackPanel Grid.Row="2">
-            <controls:CustomKeyboard>
+            <controls:CustomKeyboard LangMode="{Binding LangMode, Mode=OneWay}">
                 <hc:Interaction.Triggers>
                     <hc:EventTrigger EventName="LetterClick">
                         <hc:EventToCommand Command="{Binding LettersClickedCommand}" PassEventArgsToCommand="True" />

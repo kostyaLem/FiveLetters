@@ -18,6 +18,6 @@ internal class RequestedLetter : BindableBase
 
     public RequestedLetter()
     {
-
+        SelectedLetter = 'F';
     }
 }
