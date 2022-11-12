@@ -6,6 +6,8 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:FiveLetters.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Height="200"
+    d:Width="300"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <Grid>
@@ -44,8 +46,32 @@
                     </ItemsControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-
         </ItemsControl>
+
+        <Button
+            x:Name="RemoveBtn"
+            Width="40"
+            Height="40"
+            Margin="0,0,4,0"
+            Padding="10"
+            HorizontalAlignment="Right"
+            hc:BorderElement.CornerRadius="10"
+            Click="RemoveBtn_Click">
+            <Button.Content>
+                <Image Source="{StaticResource DeleteImage}" Stretch="Fill" />
+            </Button.Content>
+        </Button>
+
+        <Button
+            x:Name="EnterBtn"
+            Width="80"
+            Height="40"
+            Margin="0,0,4,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            hc:BorderElement.CornerRadius="10"
+            Click="EnterBtn_Click"
+            Content="Enter" />
 
     </Grid>
 </UserControl>

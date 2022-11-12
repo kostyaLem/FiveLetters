@@ -12,12 +12,7 @@ internal class RequestedLetter : BindableBase
 
     public char? SelectedLetter
     {
-        get => GetValue<char>(nameof(SelectedLetter));
+        get => GetValue<char?>(nameof(SelectedLetter));
         set => SetValue(value, nameof(SelectedLetter));
-    }
-
-    public RequestedLetter()
-    {
-        SelectedLetter = 'F';
     }
 }

@@ -4,4 +4,5 @@
     <BitmapImage x:Key="TopImage" UriSource="Images\top.png" />
     <BitmapImage x:Key="FolderImage" UriSource="Images\folder.png" />
     <BitmapImage x:Key="IconImage" UriSource="Images\icon.ico" />
+    <BitmapImage x:Key="DeleteImage" UriSource="Images\del.png" />
 </ResourceDictionary>

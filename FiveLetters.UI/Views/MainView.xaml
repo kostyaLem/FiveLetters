@@ -17,6 +17,11 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+    <hc:Window.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding RemoveClickedCoommand}" />
+        <KeyBinding Key="Return" Command="{Binding EnterClickedCommand}" />
+    </hc:Window.InputBindings>
+
     <Grid Margin="10">
 
         <Grid.RowDefinitions>
@@ -105,7 +110,10 @@
                                     Width="40"
                                     Height="40"
                                     Margin="10,5"
+                                    BorderBrush="Yellow"
                                     Content="{Binding SelectedLetter}"
+                                    FontSize="14"
+                                    FontWeight="DemiBold"
                                     IsEnabled="False" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -120,6 +128,14 @@
                 <hc:Interaction.Triggers>
                     <hc:EventTrigger EventName="LetterClick">
                         <hc:EventToCommand Command="{Binding LettersClickedCommand}" PassEventArgsToCommand="True" />
+                    </hc:EventTrigger>
+
+                    <hc:EventTrigger EventName="RemoveClick">
+                        <hc:EventToCommand Command="{Binding RemoveClickedCoommand}" />
+                    </hc:EventTrigger>
+
+                    <hc:EventTrigger EventName="EnterClick">
+                        <hc:EventToCommand Command="{Binding EnterClickedCommand}" />
                     </hc:EventTrigger>
                 </hc:Interaction.Triggers>
             </controls:CustomKeyboard>

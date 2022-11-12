@@ -13,17 +13,44 @@ public partial class CustomKeyboard : UserControl
         handlerType: typeof(RoutedEventHandler),
         ownerType: typeof(CustomKeyboard));
 
+    public static readonly RoutedEvent RemoveClickEvent = EventManager.RegisterRoutedEvent(
+        name: "RemoveClick",
+        routingStrategy: RoutingStrategy.Bubble,
+        handlerType: typeof(RoutedEventHandler),
+        ownerType: typeof(CustomKeyboard));
+    
+    public static readonly RoutedEvent EnterClickEvent = EventManager.RegisterRoutedEvent(
+        name: "EnterClick",
+        routingStrategy: RoutingStrategy.Bubble,
+        handlerType: typeof(RoutedEventHandler),
+        ownerType: typeof(CustomKeyboard));
+
     public event RoutedEventHandler LetterClick
     {
         add { AddHandler(LetterClickEvent, value); }
         remove { RemoveHandler(LetterClickEvent, value); }
     }
 
+    public event RoutedEventHandler RemoveClick
+    {
+        add { AddHandler(RemoveClickEvent, value); }
+        remove { RemoveHandler(RemoveClickEvent, value); }
+    }
+
+    public event RoutedEventHandler EnterClick
+    {
+        add { AddHandler(EnterClickEvent, value); }
+        remove { RemoveHandler(EnterClickEvent, value); }
+    }
+
+
     public static readonly DependencyProperty LangModeProperty
-        = DependencyProperty.Register("LangMode", typeof(LangMode), typeof(CustomKeyboard), 
-            new() { 
-                DefaultValue = LangMode.Rus, 
-                PropertyChangedCallback = new PropertyChangedCallback(LangModeChanged)});
+        = DependencyProperty.Register("LangMode", typeof(LangMode), typeof(CustomKeyboard),
+            new()
+            {
+                DefaultValue = LangMode.Rus,
+                PropertyChangedCallback = new PropertyChangedCallback(LangModeChanged)
+            });
 
     public LangMode LangMode
     {
@@ -89,5 +116,25 @@ public partial class CustomKeyboard : UserControl
         var letter = (char)btn.Content;
 
         RaiseCustomRoutedEvent(letter);
+    }
+
+    private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+    {
+        var routedEvent = new RoutedEventArgs
+        {
+            RoutedEvent = RemoveClickEvent
+        };
+
+        RaiseEvent(routedEvent);
+    }
+
+    private void EnterBtn_Click(object sender, RoutedEventArgs e)
+    {
+        var routedEvent = new RoutedEventArgs
+        {
+            RoutedEvent = EnterClickEvent
+        };
+
+        RaiseEvent(routedEvent);
     }
 }

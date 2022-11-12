@@ -21,4 +21,24 @@ internal class RequestedWord
         var letters = Enumerable.Range(0, wordLength).Select(x => new RequestedLetter());
         Letters = new ObservableCollection<RequestedLetter>(letters);
     }
+
+    public void SetLetter(char letter)
+    {
+        var firstLetter = Letters.FirstOrDefault(x => x.SelectedLetter is null);
+
+        if (firstLetter != null)
+        {
+            firstLetter.SelectedLetter = letter;
+        }
+    }
+
+    public void RemoveLetter()
+    {
+        var firstLetter = Letters.LastOrDefault(x => x.SelectedLetter is not null);
+
+        if (firstLetter != null)
+        {
+            firstLetter.SelectedLetter = default;
+        }
+    }
 }

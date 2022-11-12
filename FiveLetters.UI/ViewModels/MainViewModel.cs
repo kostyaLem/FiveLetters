@@ -10,11 +10,12 @@ using IDialogService = FiveLetters.UI.Services.IDialogService;
 
 namespace FiveLetters.UI.ViewModels;
 
-internal class MainViewModel : BindableBase
+internal sealed class MainViewModel : BindableBase
 {
     private readonly SettingsViewModel _settingsViewModel;
     private readonly GameProcessor _gameProcessor;
     private readonly IDialogService _dialogService;
+    private RequestedWord _currentAttempt;
 
     public IReadOnlyList<RequestedWord> Attempts
     {
@@ -41,6 +42,8 @@ internal class MainViewModel : BindableBase
     }
 
     public ICommand LettersClickedCommand { get; }
+    public ICommand RemoveClickedCoommand { get; }
+    public ICommand EnterClickedCommand { get; }
 
     public ICommand OpenRatesCommand { get; }
     public ICommand OpenSettingsCommand { get; }
@@ -59,14 +62,21 @@ internal class MainViewModel : BindableBase
         LangMode = _settingsViewModel.LangMode;
 
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
+        RemoveClickedCoommand = new DelegateCommand(() => RemoveLetterClicked());
+
         OpenSettingsCommand = new DelegateCommand(OpenSettings);
 
-        Attempts = new List<RequestedWord>(Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount)));
+        RefreshView();
     }
 
     private void LettersClicked(LetterRoutedEventArgs args)
     {
-        Debug.WriteLine(args.Letter);
+        _currentAttempt.SetLetter(args.Letter);
+    }
+
+    private void RemoveLetterClicked()
+    {
+        _currentAttempt.RemoveLetter();
     }
 
     private void OpenSettings()
@@ -79,10 +89,16 @@ internal class MainViewModel : BindableBase
         {
             LettersCount = _settingsViewModel.WordLength;
             LangMode = _settingsViewModel.LangMode;
-            Attempts = new List<RequestedWord>(
-                Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount)));
+            RefreshView();
         }
 
         IsUploading = false;
+    }
+
+    private void RefreshView()
+    {
+        var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount));
+        Attempts = new List<RequestedWord>(words);
+        _currentAttempt = Attempts[0];
     }
 }

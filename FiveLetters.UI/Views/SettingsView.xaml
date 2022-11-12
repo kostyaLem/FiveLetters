@@ -21,7 +21,7 @@
                 Margin="0,2,0,10"
                 DecimalPlaces="0"
                 Maximum="8"
-                Minimum="3"
+                Minimum="5"
                 Value="{Binding WordLength}" />
         </StackPanel>
 
