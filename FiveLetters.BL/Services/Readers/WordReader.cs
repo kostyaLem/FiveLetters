@@ -1,4 +1,4 @@
-﻿using FiveLetters.BL.Models;
+﻿using FiveLetters.BL.Models.Settings;
 
 namespace FiveLetters.BL.Services.Readers;
 

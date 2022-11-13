@@ -1,30 +1,8 @@
 ﻿using FiveLetters.BL.Models;
+using FiveLetters.BL.Models.Settings;
 using FiveLetters.BL.Services.Readers;
-using static FiveLetters.BL.Services.GameProcessor;
 
 namespace FiveLetters.BL.Services;
-
-public enum LetterStatus
-{
-    NotGuessed,
-    Wrong,
-    Nearly,
-    Guessed
-}
-
-public sealed record LetterState
-{
-    public char Ch { get; init; }
-    public LetterStatus Status { get; set; }
-
-    public LetterState(char ch, LetterStatus status)
-    {
-        Ch = ch;
-        Status = status;
-    }
-}
-
-public sealed record Attempt(bool IsGuessed, IReadOnlyList<LetterState> Letters);
 
 public sealed class GameProcessor
 {
@@ -36,8 +14,6 @@ public sealed class GameProcessor
     public GameProcessor(WordReader wordReader)
     {
         _wordReader = wordReader;
-        _newWords = new List<string>() { "РУЧКА" };
-        NextWord();
     }
 
     public async Task ResetSettings(WordReaderSettings settings)
@@ -79,22 +55,22 @@ public sealed class GameProcessor
                     (x.Status == LetterStatus.Nearly || x.Status == LetterStatus.Guessed))
                 .ToList();
 
+            var repeats = 0;
             var letterCount = _currentWord.Count(x => x == word[i]);
 
-            for (int j = 0, count = 0; j < guessed.Count; j++)
+            guessed.ForEach(x =>
             {
-                if (count < letterCount)
+                if (repeats < letterCount)
                 {
-                    count++;
+                    repeats++;
                 }
                 else
                 {
-                    guessed[j].Status = LetterStatus.Wrong;
+                    x.Status = LetterStatus.Wrong;
                 }
-            }
+            });
         }
 
         return new(states.All(x => x.Status == LetterStatus.Guessed), states);
     }
-
 }

@@ -1,4 +1,4 @@
-﻿namespace FiveLetters.BL.Models;
+﻿namespace FiveLetters.BL.Models.Settings;
 
 public record WordReaderSettings
 {
