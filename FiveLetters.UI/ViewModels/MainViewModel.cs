@@ -3,18 +3,16 @@ using FiveLetters.BL.Services;
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using IDialogService = FiveLetters.UI.Services.IDialogService;
+using ISettingsService = FiveLetters.UI.Services.ISettingsService;
 
 namespace FiveLetters.UI.ViewModels;
 
 internal sealed class MainViewModel : BindableBase
 {
-    private readonly SettingsViewModel _settingsViewModel;
     private readonly GameProcessor _gameProcessor;
-    private readonly IDialogService _dialogService;
+    private readonly ISettingsService _dialogService;
     private RequestedWord _currentAttempt;
 
     public IReadOnlyList<RequestedWord> Attempts
@@ -29,16 +27,10 @@ internal sealed class MainViewModel : BindableBase
         set => SetValue(value, nameof(IsUploading));
     }
 
-    public int LettersCount
+    public Settings Settings
     {
-        get => GetValue<int>(nameof(LettersCount));
-        set => SetValue(value, nameof(LettersCount));
-    }
-
-    public LangMode LangMode
-    {
-        get => GetValue<LangMode>(nameof(LangMode));
-        set => SetValue(value, nameof(LangMode));
+        get => GetValue<Settings>(nameof(Settings));
+        set => SetValue(value, nameof(Settings));
     }
 
     public ICommand LettersClickedCommand { get; }
@@ -50,16 +42,14 @@ internal sealed class MainViewModel : BindableBase
     public ICommand OpenHelpCommand { get; }
 
     public MainViewModel(
-        SettingsViewModel settingsViewModel,
+        Settings settings,
         GameProcessor gameProcessor,
-        IDialogService dialogService)
+        ISettingsService dialogService)
     {
-        _settingsViewModel = settingsViewModel;
         _gameProcessor = gameProcessor;
         _dialogService = dialogService;
 
-        LettersCount = _settingsViewModel.WordLength;
-        LangMode = _settingsViewModel.LangMode;
+        Settings = settings;
 
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
         RemoveClickedCoommand = new DelegateCommand(RemoveClicked);
@@ -89,12 +79,10 @@ internal sealed class MainViewModel : BindableBase
     {
         IsUploading = true;
 
-        _dialogService.ShowDialog<SettingsViewModel>();
-
-        if (_settingsViewModel.IsAccepted)
+        var result = _dialogService.ShowDialog(Settings);
+        if (result is not null)
         {
-            LettersCount = _settingsViewModel.WordLength;
-            LangMode = _settingsViewModel.LangMode;
+            Settings = result;
             RefreshView();
         }
 
@@ -103,7 +91,7 @@ internal sealed class MainViewModel : BindableBase
 
     private void RefreshView()
     {
-        var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(LettersCount));
+        var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(Settings.LettersCount));
         Attempts = new List<RequestedWord>(words);
         _currentAttempt = Attempts[0];
     }

@@ -24,20 +24,12 @@ public static class Configuration
         serviceSollection.AddSingleton<WordReader>(); // перенести в BL
         serviceSollection.AddTransient<SettingsView>();
 
-        serviceSollection.AddSingleton<IDialogService>(x =>
-        {
-            var map = new Dictionary<Type, Type>()
-            {
-                { typeof(SettingsViewModel), typeof(SettingsView) }
-            };
-
-            return new DialogService(map);
-        });
+        serviceSollection.AddTransient<ISettingsService, SettingsService>();
 
         serviceSollection.AddSingleton(new Settings
         {
             FilePath = new Uri(Path.Combine(Environment.CurrentDirectory, "RussianWords.txt"), UriKind.Absolute),
-            WordLength = 5,
+            LettersCount = 5,
             LangMode = LangMode.Rus
         });
     }

@@ -53,6 +53,7 @@ public sealed class GameProcessor
             var guessed = states
                 .Where(x => x.Ch == word[i] &&
                     (x.Status == LetterStatus.Nearly || x.Status == LetterStatus.Guessed))
+                .OrderBy(x => x.Status)
                 .ToList();
 
             var repeats = 0;

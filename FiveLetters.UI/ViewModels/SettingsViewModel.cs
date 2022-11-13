@@ -11,7 +11,7 @@ internal sealed class SettingsViewModel : ViewModelBase
     public int WordLength { get; set; }
     public LangMode LangMode { get; set; }
 
-    public bool IsAccepted { get; private set; } 
+    public bool IsAccepted { get; set; }
 
     public ICommand AcceptCommand { get; }
     public ICommand SelectFileCommand { get; }
@@ -19,7 +19,7 @@ internal sealed class SettingsViewModel : ViewModelBase
     public SettingsViewModel(Settings settings)
     {
         FilePath = settings.FilePath.LocalPath;
-        WordLength = settings.WordLength;
+        WordLength = settings.LettersCount;
         LangMode = settings.LangMode;
 
         AcceptCommand = new DelegateCommand(() => IsAccepted = true);
@@ -38,5 +38,13 @@ internal sealed class SettingsViewModel : ViewModelBase
             FilePath = dialog.FileName;
             RaisePropertiesChanged(nameof(FilePath));
         }
+    }
+
+    public bool IsChanged(Settings settings)
+    {
+        return (FilePath != settings.FilePath.LocalPath
+            || WordLength != settings.LettersCount
+            || LangMode != settings.LangMode) 
+                && IsAccepted;
     }
 }
