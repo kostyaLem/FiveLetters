@@ -10,6 +10,8 @@ internal class RequestedWord
 
     public bool IsFinished => Letters.All(x => x.SelectedLetter is not null);
 
+    public string Word => new string(Letters.Select(x => x.SelectedLetter ?? '\0').ToArray());
+
     public RequestedWord()
     {
         var letters = Enumerable.Range(0, 7).Select(x => new RequestedLetter());

@@ -62,7 +62,8 @@ internal sealed class MainViewModel : BindableBase
         LangMode = _settingsViewModel.LangMode;
 
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
-        RemoveClickedCoommand = new DelegateCommand(() => RemoveLetterClicked());
+        RemoveClickedCoommand = new DelegateCommand(RemoveClicked);
+        EnterClickedCommand = new DelegateCommand(EnterClicked);
 
         OpenSettingsCommand = new DelegateCommand(OpenSettings);
 
@@ -74,9 +75,14 @@ internal sealed class MainViewModel : BindableBase
         _currentAttempt.SetLetter(args.Letter);
     }
 
-    private void RemoveLetterClicked()
+    private void RemoveClicked()
     {
         _currentAttempt.RemoveLetter();
+    }
+
+    private void EnterClicked()
+    {
+        var attempt = _gameProcessor.TryGuess(_currentAttempt.Word);
     }
 
     private void OpenSettings()
