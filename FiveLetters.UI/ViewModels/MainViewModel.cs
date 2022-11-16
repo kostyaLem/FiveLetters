@@ -1,6 +1,8 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.Native;
 using FiveLetters.BL.Services;
 using FiveLetters.UI.Controls;
+using FiveLetters.UI.Mappers;
 using FiveLetters.UI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +75,11 @@ internal sealed class MainViewModel : BindableBase
     private void EnterClicked()
     {
         var attempt = _gameProcessor.TryGuess(_currentAttempt.Word);
+
+        foreach (var (current, updated) in _currentAttempt.Letters.Zip(attempt.Letters))
+        {
+            current.CellStyle = CellStyleMapper.Map(updated.Status);
+        }
     }
 
     private void OpenSettings()

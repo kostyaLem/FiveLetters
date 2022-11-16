@@ -2,8 +2,8 @@
 
 internal enum CellStyle
 {
-    Empty,
-    Wrong,
-    Nearly,
-    Guessed
+    Empty, // transparent
+    Wrong, // gray
+    Nearly, // smoke whie
+    Guessed // dark yellow
 }

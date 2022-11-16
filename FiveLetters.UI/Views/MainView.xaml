@@ -33,6 +33,7 @@
         <Border
             Grid.RowSpan="3"
             Panel.ZIndex="10"
+            d:Visibility="Hidden"
             Background="#66000000"
             CornerRadius="10"
             Visibility="{Binding Path=IsUploading, Converter={dxmvvm:BooleanToVisibilityConverter}}">
@@ -106,15 +107,39 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button
+                                <Border
                                     Width="40"
                                     Height="40"
                                     Margin="10,5"
+                                    Padding="0"
                                     BorderBrush="Yellow"
-                                    Content="{Binding SelectedLetter}"
-                                    FontSize="14"
-                                    FontWeight="DemiBold"
-                                    IsEnabled="False" />
+                                    BorderThickness="1"
+                                    CornerRadius="5">
+                                    <Label
+                                        Padding="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        BorderThickness="0"
+                                        Content="{Binding SelectedLetter}"
+                                        FontSize="14"
+                                        FontWeight="DemiBold">
+                                        <Label.Style>
+                                            <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Wrong}">
+                                                        <Setter Property="Background" Value="Gray" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Nearly}">
+                                                        <Setter Property="Background" Value="GhostWhite" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Guessed}">
+                                                        <Setter Property="Background" Value="#FFFFE700" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
