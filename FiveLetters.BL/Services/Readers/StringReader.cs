@@ -12,7 +12,7 @@ internal static class StringReader
         var strs = new List<string>();
         using var stream = new StreamReader(filePath);
 
-        while (stream.EndOfStream)
+        while (!stream.EndOfStream)
         {
             strs.Add(await stream.ReadLineAsync() ?? string.Empty);
         }

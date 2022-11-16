@@ -11,7 +11,9 @@ public sealed class WordReader
         var wordChecker = WordCheckerFactory.CreateChecker(settings.LangMode);
 
         var processedWords = words
-            .Where(wordChecker.CheckWord)
+            .Select(x => x.Trim())
+            .Where(x => wordChecker.CheckWord(x, settings.LettersCount))
+            .Select(x => x.ToUpper())
             .ToList();
 
         return processedWords;
