@@ -19,6 +19,8 @@ public sealed class GameProcessor
     public async Task ResetSettings(WordReaderSettings settings)
     {
         _newWords = (await _wordReader.ReadWords(settings)).ToList();
+        _currentWord = _newWords[0];
+        _newWords.RemoveAt(0);
     }
 
     public async Task NextWord()

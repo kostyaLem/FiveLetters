@@ -28,7 +28,7 @@ public static class Configuration
 
         serviceSollection.AddSingleton(new Settings
         {
-            FilePath = new Uri(Path.Combine(Environment.CurrentDirectory, "RussianWords.txt"), UriKind.Absolute),
+            FilePath = new Uri(Path.Combine(Environment.CurrentDirectory, "Resources\\RussianWords.txt"), UriKind.Absolute),
             LettersCount = 5,
             LangMode = LangMode.Rus
         });

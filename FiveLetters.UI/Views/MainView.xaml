@@ -22,6 +22,12 @@
         <KeyBinding Key="Return" Command="{Binding EnterClickedCommand}" />
     </hc:Window.InputBindings>
 
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding LoadViewDataCommand}" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
+
     <Grid Margin="10">
 
         <Grid.RowDefinitions>

@@ -6,6 +6,7 @@ using FiveLetters.UI.Mappers;
 using FiveLetters.UI.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ISettingsService = FiveLetters.UI.Services.ISettingsService;
 
@@ -35,6 +36,8 @@ internal sealed class MainViewModel : BindableBase
         set => SetValue(value, nameof(Settings));
     }
 
+    public ICommand LoadViewDataCommand { get; }
+
     public ICommand LettersClickedCommand { get; }
     public ICommand RemoveClickedCoommand { get; }
     public ICommand EnterClickedCommand { get; }
@@ -53,11 +56,12 @@ internal sealed class MainViewModel : BindableBase
 
         Settings = settings;
 
+        LoadViewDataCommand = new AsyncCommand(LoadView);
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
         RemoveClickedCoommand = new DelegateCommand(RemoveClicked);
         EnterClickedCommand = new DelegateCommand(EnterClicked);
 
-        OpenSettingsCommand = new DelegateCommand(OpenSettings);
+        OpenSettingsCommand = new AsyncCommand(OpenSettings);
 
         RefreshView();
     }
@@ -82,7 +86,7 @@ internal sealed class MainViewModel : BindableBase
         }
     }
 
-    private void OpenSettings()
+    private async Task OpenSettings()
     {
         IsUploading = true;
 
@@ -90,6 +94,9 @@ internal sealed class MainViewModel : BindableBase
         if (result is not null)
         {
             Settings = result;
+
+            await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
+
             RefreshView();
         }
 
@@ -101,5 +108,10 @@ internal sealed class MainViewModel : BindableBase
         var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(Settings.LettersCount));
         Attempts = new List<RequestedWord>(words);
         _currentAttempt = Attempts[0];
+    }
+
+    private async Task LoadView()
+    {
+        await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
     }
 }
