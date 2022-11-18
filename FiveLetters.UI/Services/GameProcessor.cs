@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FiveLetters.UI.Services;
 
-internal sealed class GameProcessor : BindableBase, IGameState
+internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 {
     private readonly WordsManager _wordsManager;
     private RequestedWord _currentAttempt;

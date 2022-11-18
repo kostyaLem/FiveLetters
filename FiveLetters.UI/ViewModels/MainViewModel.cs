@@ -11,7 +11,7 @@ namespace FiveLetters.UI.ViewModels;
 internal sealed class MainViewModel : BindableBase
 {
     private readonly ISettingsService _dialogService;
-    private readonly GameProcessor _gameProcessor;
+    private readonly IGameProcessor _gameProcessor;
 
     public IGameState GameProcessor => _gameProcessor;
 
@@ -39,7 +39,7 @@ internal sealed class MainViewModel : BindableBase
 
     public MainViewModel(
         Settings settings,
-        GameProcessor gameProcessor,
+        IGameProcessor gameProcessor,
         ISettingsService dialogService)
     {
         _gameProcessor = gameProcessor;
