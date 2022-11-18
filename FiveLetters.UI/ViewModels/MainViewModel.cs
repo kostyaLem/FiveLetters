@@ -13,7 +13,7 @@ internal sealed class MainViewModel : BindableBase
     private readonly ISettingsService _dialogService;
     private readonly IGameProcessor _gameProcessor;
 
-    public IGameState GameProcessor => _gameProcessor;
+    public IGameState GameState => _gameProcessor;
 
     public bool IsUploading
     {

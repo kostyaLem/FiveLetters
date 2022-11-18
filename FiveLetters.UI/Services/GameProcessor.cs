@@ -11,6 +11,9 @@ namespace FiveLetters.UI.Services;
 
 internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 {
+    private const int _totalAttempts = 6;
+    private int _countOfAttempts = 0;
+
     private readonly WordsManager _wordsManager;
     private RequestedWord _currentAttempt;
     private Settings _settings;
@@ -38,6 +41,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     public bool CheckWord()
     {
+        _countOfAttempts++;
+
         var states = _wordsManager.TryGuess(_currentAttempt.Word);
         var isGuessed = states.All(x => x.Status == BL.Models.LetterStatus.Guessed);
 
@@ -46,7 +51,9 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             current.CellStyle = CellStyleMapper.Map(updated.Status);
         }
 
-        return isGuessed;
+        _currentAttempt = _countOfAttempts < Attempts.Count ? Attempts[_countOfAttempts] : null;
+
+        return isGuessed; // return game state
     }
 
     public bool NextWord()
@@ -70,7 +77,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     private void Reset()
     {
-        Attempts = Enumerable.Range(0, 6)
+        Attempts = Enumerable.Range(0, _totalAttempts)
             .Select(x => new RequestedWord(_settings.LettersCount))
             .ToList();
 

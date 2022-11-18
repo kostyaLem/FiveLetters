@@ -102,7 +102,7 @@
         <ItemsControl
             Grid.Row="1"
             HorizontalAlignment="Center"
-            ItemsSource="{Binding Attempts}">
+            ItemsSource="{Binding GameState.Attempts}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ItemsControl ItemsSource="{Binding Letters}">

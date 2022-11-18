@@ -21,11 +21,12 @@ public static class Configuration
         serviceSollection.AddSingleton<SettingsViewModel>();
 
         serviceSollection.AddSingleton<MainView>();
-        serviceSollection.AddSingleton<WordsManager>(); // перенести в BL
-        serviceSollection.AddSingleton<WordReader>(); // перенести в BL
+        serviceSollection.AddSingleton<WordsManager>(); //TODO: перенести в BL
+        serviceSollection.AddSingleton<WordReader>();   //TODO: перенести в BL
         serviceSollection.AddTransient<SettingsView>();
 
         serviceSollection.AddTransient<ISettingsService, SettingsService>();
+        serviceSollection.AddTransient<IGameProcessor, GameProcessor>();
 
         serviceSollection.AddSingleton(new Settings
         {
