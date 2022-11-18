@@ -4,11 +4,11 @@ using FiveLetters.BL.Services;
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Mappers;
 using FiveLetters.UI.Models;
+using FiveLetters.UI.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ISettingsService = FiveLetters.UI.Services.ISettingsService;
 
 namespace FiveLetters.UI.ViewModels;
 
@@ -56,14 +56,12 @@ internal sealed class MainViewModel : BindableBase
 
         Settings = settings;
 
-        LoadViewDataCommand = new AsyncCommand(LoadView);
+        LoadViewDataCommand = new AsyncCommand(RefreshView);
         LettersClickedCommand = new DelegateCommand<LetterRoutedEventArgs>(LettersClicked);
         RemoveClickedCoommand = new DelegateCommand(RemoveClicked);
         EnterClickedCommand = new DelegateCommand(EnterClicked);
 
         OpenSettingsCommand = new AsyncCommand(OpenSettings);
-
-        RefreshView();
     }
 
     private void LettersClicked(LetterRoutedEventArgs args)
@@ -84,6 +82,8 @@ internal sealed class MainViewModel : BindableBase
         {
             current.CellStyle = CellStyleMapper.Map(updated.Status);
         }
+
+        // show message box if guessed and begin new game then
     }
 
     private async Task OpenSettings()
@@ -95,23 +95,18 @@ internal sealed class MainViewModel : BindableBase
         {
             Settings = result;
 
-            await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
-
-            RefreshView();
+            await RefreshView();
         }
 
         IsUploading = false;
     }
 
-    private void RefreshView()
+    private async Task RefreshView()
     {
+        await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
+
         var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(Settings.LettersCount));
         Attempts = new List<RequestedWord>(words);
         _currentAttempt = Attempts[0];
-    }
-
-    private async Task LoadView()
-    {
-        await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
     }
 }
