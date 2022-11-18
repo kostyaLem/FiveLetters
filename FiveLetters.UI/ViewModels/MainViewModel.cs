@@ -1,12 +1,8 @@
 ﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.Native;
-using FiveLetters.BL.Services;
 using FiveLetters.UI.Controls;
-using FiveLetters.UI.Mappers;
 using FiveLetters.UI.Models;
 using FiveLetters.UI.Services;
-using System.Collections.Generic;
-using System.Linq;
+using FiveLetters.UI.Services.Interfaces;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,15 +10,10 @@ namespace FiveLetters.UI.ViewModels;
 
 internal sealed class MainViewModel : BindableBase
 {
-    private readonly GameProcessor _gameProcessor;
     private readonly ISettingsService _dialogService;
-    private RequestedWord _currentAttempt;
+    private readonly GameProcessor _gameProcessor;
 
-    public IReadOnlyList<RequestedWord> Attempts
-    {
-        get => GetValue<IReadOnlyList<RequestedWord>>(nameof(Attempts));
-        set => SetValue(value, nameof(Attempts));
-    }
+    public IGameState GameProcessor => _gameProcessor;
 
     public bool IsUploading
     {
@@ -66,24 +57,24 @@ internal sealed class MainViewModel : BindableBase
 
     private void LettersClicked(LetterRoutedEventArgs args)
     {
-        _currentAttempt.SetLetter(args.Letter);
+        _gameProcessor.AddLetter(args.Letter);
     }
 
     private void RemoveClicked()
     {
-        _currentAttempt.RemoveLetter();
+        _gameProcessor.RemoveLetter();
     }
 
     private void EnterClicked()
     {
-        var attempt = _gameProcessor.TryGuess(_currentAttempt.Word);
-
-        foreach (var (current, updated) in _currentAttempt.Letters.Zip(attempt.Letters))
+        if (_gameProcessor.CheckWord())
         {
-            current.CellStyle = CellStyleMapper.Map(updated.Status);
+            // show message box if guessed and begin new game then
         }
+        else
+        {
 
-        // show message box if guessed and begin new game then
+        }
     }
 
     private async Task OpenSettings()
@@ -103,10 +94,6 @@ internal sealed class MainViewModel : BindableBase
 
     private async Task RefreshView()
     {
-        await _gameProcessor.ResetSettings(SettingsMapper.Map(Settings));
-
-        var words = Enumerable.Range(0, 6).Select(x => new RequestedWord(Settings.LettersCount));
-        Attempts = new List<RequestedWord>(words);
-        _currentAttempt = Attempts[0];
+        await _gameProcessor.ReloadWords(Settings);
     }
 }

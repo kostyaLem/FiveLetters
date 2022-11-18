@@ -24,14 +24,15 @@ public sealed class WordsManager
         _currentWord = _wordsQueue.Dequeue();
     }
 
-    public void MoveNext()
+    public bool MoveNext()
     {
         if (_wordsQueue.TryDequeue(out var nextWord))
         {
             _currentWord = nextWord;
+            return true;
         }
 
-        throw new Exception();
+        return false;
     }
 
     public IReadOnlyList<LetterState> TryGuess(string word)

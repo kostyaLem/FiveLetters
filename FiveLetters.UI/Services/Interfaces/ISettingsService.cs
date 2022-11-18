@@ -1,7 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Models;
 
-namespace FiveLetters.UI.Services;
+namespace FiveLetters.UI.Services.Interfaces;
 
 internal interface ISettingsService
 {

@@ -153,7 +153,7 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Guessed}">
                                                         <Setter Property="Background" Value="#FFFFE700" />
-                                                        <Setter Property="Foreground" Value="White" />
+                                                        <Setter Property="Foreground" Value="Black" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

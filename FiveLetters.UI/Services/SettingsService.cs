@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Models;
+using FiveLetters.UI.Services.Interfaces;
 using FiveLetters.UI.ViewModels;
 using FiveLetters.UI.Views;
 using HandyControl.Controls;
