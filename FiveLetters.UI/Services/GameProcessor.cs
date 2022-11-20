@@ -53,6 +53,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     public AttemptStatus CheckWord()
     {
+        CanEnter = false;
+
         if (_countOfAttempts == Attempts.Count)
         {
             return AttemptStatus.Lose;

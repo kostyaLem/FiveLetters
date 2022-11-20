@@ -6,6 +6,8 @@ namespace FiveLetters.BL.Services;
 
 public sealed class WordsManager
 {
+    private static readonly Random _rnd = new Random();
+
     private readonly WordReader _wordReader;
 
     private Queue<string> _wordsQueue;
@@ -19,9 +21,14 @@ public sealed class WordsManager
     public async Task ResetSettings(WordReaderSettings settings)
     {
         var words = await _wordReader.ReadWords(settings);
+        var shakedWords = words.OrderBy(x => _rnd.Next());
 
-        _wordsQueue = new Queue<string>(words);
-        _currentWord = _wordsQueue.Dequeue();
+        _wordsQueue = new Queue<string>(shakedWords);
+
+        if (_wordsQueue.TryDequeue(out var word))
+        {
+            _currentWord = word;
+        }
     }
 
     public bool MoveNext()
