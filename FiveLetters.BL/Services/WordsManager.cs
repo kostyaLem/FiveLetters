@@ -54,10 +54,10 @@ public sealed class WordsManager
     {
         var states = new List<LetterState>();
 
-        var letterStatus = LetterStatus.Wrong;
-
         foreach (var (attemptCh, currentCh) in word.Zip(_currentWord))
         {
+            var letterStatus = LetterStatus.Wrong;
+
             if (attemptCh == currentCh)
             {
                 letterStatus = LetterStatus.Guessed;
