@@ -67,7 +67,14 @@ internal sealed class MainViewModel : BindableBase
 
     private void EnterClicked()
     {
-        if (_gameProcessor.CheckWord())
+        var attemptStatus = _gameProcessor.CheckWord();
+
+        if (attemptStatus != AttemptStatus.CanRepeat)
+        {
+            
+        }
+
+        if (attemptStatus == AttemptStatus.Win)
         {
             // show message box if guessed and begin new game then
         }

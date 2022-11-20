@@ -8,22 +8,37 @@ namespace FiveLetters.UI.Controls;
 public partial class CustomKeyboard : UserControl
 {
     public static readonly RoutedEvent LetterClickEvent = EventManager.RegisterRoutedEvent(
-        name: "LetterClick",
+        name: nameof(LetterClick),
         routingStrategy: RoutingStrategy.Bubble,
         handlerType: typeof(RoutedEventHandler),
         ownerType: typeof(CustomKeyboard));
 
     public static readonly RoutedEvent RemoveClickEvent = EventManager.RegisterRoutedEvent(
-        name: "RemoveClick",
+        name: nameof(RemoveClick),
         routingStrategy: RoutingStrategy.Bubble,
         handlerType: typeof(RoutedEventHandler),
         ownerType: typeof(CustomKeyboard));
-    
+
     public static readonly RoutedEvent EnterClickEvent = EventManager.RegisterRoutedEvent(
-        name: "EnterClick",
+        name: nameof(EnterClick),
         routingStrategy: RoutingStrategy.Bubble,
         handlerType: typeof(RoutedEventHandler),
         ownerType: typeof(CustomKeyboard));
+
+    public static readonly DependencyProperty RemoveButtonEnabledProperty
+        = DependencyProperty.Register(nameof(RemoveButtonEnabled), typeof(bool), typeof(CustomKeyboard), new PropertyMetadata
+        {
+            DefaultValue = true,
+            PropertyChangedCallback = (d, e) => ((CustomKeyboard)d).RemoveBtn.IsEnabled = (bool)e.NewValue
+        });
+
+    public static readonly DependencyProperty EnterButtonEnabledProperty
+        = DependencyProperty.Register(nameof(EnterButtonEnabled), typeof(bool), typeof(CustomKeyboard), new PropertyMetadata
+        {
+            DefaultValue = true,
+            PropertyChangedCallback = (d, e) => ((CustomKeyboard)d).EnterBtn.IsEnabled = (bool)e.NewValue
+        });
+
 
     public event RoutedEventHandler LetterClick
     {
@@ -45,7 +60,7 @@ public partial class CustomKeyboard : UserControl
 
 
     public static readonly DependencyProperty LangModeProperty
-        = DependencyProperty.Register("LangMode", typeof(LangMode), typeof(CustomKeyboard),
+        = DependencyProperty.Register(nameof(LangMode), typeof(LangMode), typeof(CustomKeyboard),
             new()
             {
                 DefaultValue = LangMode.Rus,
@@ -56,6 +71,18 @@ public partial class CustomKeyboard : UserControl
     {
         get => (LangMode)GetValue(LangModeProperty);
         set => SetValue(LangModeProperty, value);
+    }
+
+    public bool RemoveButtonEnabled
+    {
+        get => (bool)GetValue(RemoveButtonEnabledProperty);
+        set => SetValue(RemoveButtonEnabledProperty, value);
+    }
+
+    public bool EnterButtonEnabled
+    {
+        get => (bool)GetValue(EnterButtonEnabledProperty);
+        set => SetValue(EnterButtonEnabledProperty, value);
     }
 
     public CustomKeyboard()

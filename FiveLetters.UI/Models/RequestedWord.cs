@@ -1,5 +1,4 @@
-﻿using HandyControl.Tools.Extension;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace FiveLetters.UI.Models;
@@ -25,7 +24,7 @@ internal class RequestedWord
         Letters = new ObservableCollection<RequestedLetter>(letters);
     }
 
-    public void SetLetter(char letter)
+    public bool SetLetter(char letter)
     {
         var firstLetter = Letters.FirstOrDefault(x => x.SelectedLetter is null);
 
@@ -33,9 +32,11 @@ internal class RequestedWord
         {
             firstLetter.SelectedLetter = letter;
         }
+
+        return IsFull();
     }
 
-    public void RemoveLetter()
+    public bool RemoveLetter()
     {
         var firstLetter = Letters.LastOrDefault(x => x.SelectedLetter is not null);
 
@@ -43,5 +44,17 @@ internal class RequestedWord
         {
             firstLetter.SelectedLetter = default;
         }
+
+        return !HasEmpty();
+    }
+
+    private bool IsFull()
+    {
+        return Letters.All(x => x.SelectedLetter is not null);
+    }
+
+    private bool HasEmpty()
+    {
+        return Letters.Any(x => x.SelectedLetter is null);
     }
 }

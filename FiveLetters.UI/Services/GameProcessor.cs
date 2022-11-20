@@ -18,6 +18,18 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
     private RequestedWord _currentAttempt;
     private Settings _settings;
 
+    public bool CanEnter
+    {
+        get => GetValue<bool>(nameof(CanEnter));
+        set => SetValue(value, nameof(CanEnter));
+    }
+
+    public bool CanRemove
+    {
+        get => GetValue<bool>(nameof(CanRemove));
+        set => SetValue(value, nameof(CanRemove));
+    }
+
     public IReadOnlyList<RequestedWord> Attempts
     {
         get => GetValue<IReadOnlyList<RequestedWord>>(nameof(Attempts));
@@ -31,16 +43,21 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     public void AddLetter(char letter)
     {
-        _currentAttempt.SetLetter(letter);
+        CanEnter = _currentAttempt.SetLetter(letter);
     }
 
     public void RemoveLetter()
     {
-        _currentAttempt.RemoveLetter();
+        CanEnter = _currentAttempt.RemoveLetter();
     }
 
-    public bool CheckWord()
+    public AttemptStatus CheckWord()
     {
+        if (_countOfAttempts == Attempts.Count)
+        {
+            return AttemptStatus.Lose;
+        }
+
         _countOfAttempts++;
 
         var states = _wordsManager.TryGuess(_currentAttempt.Word);
@@ -51,9 +68,19 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             current.CellStyle = CellStyleMapper.Map(updated.Status);
         }
 
-        _currentAttempt = _countOfAttempts < Attempts.Count ? Attempts[_countOfAttempts] : null;
+        var attemptStatus = isGuessed switch
+        {
+            true => AttemptStatus.Win,
+            _ when _countOfAttempts < Attempts.Count => AttemptStatus.CanRepeat,
+            _ => AttemptStatus.Lose
+        };
 
-        return isGuessed; // return game state
+        if (attemptStatus == AttemptStatus.CanRepeat)
+        {
+            _currentAttempt = Attempts[_countOfAttempts];
+        }
+
+        return attemptStatus;
     }
 
     public bool NextWord()
@@ -82,5 +109,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             .ToList();
 
         _currentAttempt = Attempts[0];
+
+        CanRemove = true;
+        CanEnter = false;
     }
 }

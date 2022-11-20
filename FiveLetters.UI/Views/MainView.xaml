@@ -149,7 +149,7 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Nearly}">
                                                         <Setter Property="Background" Value="GhostWhite" />
-                                                        <Setter Property="Foreground" Value="Gray" />
+                                                        <Setter Property="Foreground" Value="#FF3D3D3D" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding DataContext.CellStyle, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static models:CellStyle.Guessed}">
                                                         <Setter Property="Background" Value="#FFFFE700" />
@@ -169,7 +169,10 @@
         </ItemsControl>
 
         <StackPanel Grid.Row="2">
-            <controls:CustomKeyboard LangMode="{Binding Settings.LangMode, Mode=OneWay}">
+            <controls:CustomKeyboard
+                EnterButtonEnabled="{Binding GameState.CanEnter}"
+                LangMode="{Binding Settings.LangMode, Mode=OneWay}"
+                RemoveButtonEnabled="{Binding GameState.CanRemove}">
                 <hc:Interaction.Triggers>
                     <hc:EventTrigger EventName="LetterClick">
                         <hc:EventToCommand Command="{Binding LettersClickedCommand}" PassEventArgsToCommand="True" />

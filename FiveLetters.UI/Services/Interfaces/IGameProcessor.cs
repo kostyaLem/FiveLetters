@@ -5,7 +5,7 @@ namespace FiveLetters.UI.Services.Interfaces;
 internal interface IGameProcessor : IGameState
 {
     void AddLetter(char letter);
-    bool CheckWord();
+    AttemptStatus CheckWord();
     bool NextWord();
     Task ReloadWords(Settings settings);
     void RemoveLetter();
