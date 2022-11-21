@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
-using FiveLetters.UI.Services;
 using FiveLetters.UI.Services.Interfaces;
 using System.Threading.Tasks;
 using System.Windows.Input;

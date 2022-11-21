@@ -14,11 +14,15 @@
 	  <None Remove="Resources\Images\folder.png" />
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\icon.ico" />
-	  <None Remove="Resources\Images\top.png" />
+	  <None Remove="Resources\Images\reset.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Include="icon.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Images\reset.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,7 +41,6 @@
 	  <Resource Include="Resources\Images\folder.png" />
 	  <Resource Include="Resources\Images\help.png" />
 	  <Resource Include="Resources\Images\icon.ico" />
-	  <Resource Include="Resources\Images\top.png" />
 	</ItemGroup>
 
 	<ItemGroup>

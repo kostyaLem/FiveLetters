@@ -87,14 +87,37 @@
                 </Style>
             </StackPanel.Resources>
 
-            <Button ToolTip="Рейтинг">
-                <Image Source="{StaticResource TopImage}" />
+            <Button
+                Width="32"
+                Height="32"
+                Padding="0"
+                Command="{Binding ResetCommand}"
+                ToolTip="Сбросить">
+                <Image
+                    Width="28"
+                    Height="28"
+                    Source="{StaticResource ResetImage}" />
             </Button>
-            <Button Command="{Binding OpenSettingsCommand}" ToolTip="Настройки">
-                <Image Source="{StaticResource ConfigImage}" />
+            <Button
+                Width="32"
+                Height="32"
+                Padding="0"
+                Command="{Binding OpenSettingsCommand}"
+                ToolTip="Настройки">
+                <Image
+                    Width="32"
+                    Height="32"
+                    Source="{StaticResource ConfigImage}" />
             </Button>
-            <Button ToolTip="Правила">
-                <Image Source="{StaticResource HelpImage}" />
+            <Button
+                Width="32"
+                Height="32"
+                Padding="0"
+                ToolTip="Правила">
+                <Image
+                    Width="32"
+                    Height="32"
+                    Source="{StaticResource HelpImage}" />
             </Button>
 
         </StackPanel>
