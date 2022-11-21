@@ -1,9 +1,9 @@
 ﻿using DevExpress.Mvvm;
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
+using FiveLetters.UI.Services;
 using FiveLetters.UI.Services.Interfaces;
 using System;
-using System.CodeDom.Compiler;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -71,18 +71,20 @@ internal sealed class MainViewModel : BindableBase
     {
         var attemptStatus = _gameProcessor.CheckWord();
 
-        if (attemptStatus != AttemptStatus.CanRepeat)
-        {
-
-        }
-
         if (attemptStatus == AttemptStatus.Win)
         {
-            // show message box if guessed and begin new game then
+            InfoBox.ShowWin();
         }
-        else
+        else if (attemptStatus == AttemptStatus.Lose)
         {
-
+            InfoBox.ShowLose();
+        }
+        else if (attemptStatus != AttemptStatus.CanRepeat)
+        {
+            if (!_gameProcessor.NextWord())
+            {
+                InfoBox.ShowEnd();
+            }
         }
     }
 
