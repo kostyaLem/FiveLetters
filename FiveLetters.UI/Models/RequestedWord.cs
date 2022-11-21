@@ -24,7 +24,7 @@ internal class RequestedWord
         Letters = new ObservableCollection<RequestedLetter>(letters);
     }
 
-    public bool SetLetter(char letter)
+    public void SetLetter(char letter)
     {
         var firstLetter = Letters.FirstOrDefault(x => x.SelectedLetter is null);
 
@@ -32,11 +32,9 @@ internal class RequestedWord
         {
             firstLetter.SelectedLetter = letter;
         }
-
-        return IsFull();
     }
 
-    public bool RemoveLetter()
+    public void RemoveLetter()
     {
         var firstLetter = Letters.LastOrDefault(x => x.SelectedLetter is not null);
 
@@ -44,17 +42,5 @@ internal class RequestedWord
         {
             firstLetter.SelectedLetter = default;
         }
-
-        return !HasEmpty();
-    }
-
-    private bool IsFull()
-    {
-        return Letters.All(x => x.SelectedLetter is not null);
-    }
-
-    private bool HasEmpty()
-    {
-        return Letters.Any(x => x.SelectedLetter is null);
     }
 }

@@ -1,9 +1,11 @@
 ﻿using DevExpress.Mvvm;
+using FiveLetters.BL.Models;
 using FiveLetters.BL.Services;
 using FiveLetters.UI.Mappers;
 using FiveLetters.UI.Models;
 using FiveLetters.UI.Services.Interfaces;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,46 +45,52 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     public void AddLetter(char letter)
     {
-        CanEnter = _currentAttempt.SetLetter(letter);
+        _currentAttempt.SetLetter(letter);
+
+        CanEnter = _currentAttempt.IsFinished;
     }
 
     public void RemoveLetter()
     {
-        CanEnter = _currentAttempt.RemoveLetter();
+        _currentAttempt.RemoveLetter();
+
+        CanEnter = _currentAttempt.IsFinished;
     }
 
     public AttemptStatus CheckWord()
     {
-        CanEnter = false;
-
-        if (_countOfAttempts == Attempts.Count)
-        {
-            return AttemptStatus.Lose;
-        }
-
         _countOfAttempts++;
 
+        var states = UpdateCells();
+
+        if (states.All(x=>x.Status == LetterStatus.Guessed))
+        {
+            CanEnter = CanRemove = false;
+            return AttemptStatus.Win;
+        }
+
+        if (_countOfAttempts < Attempts.Count)
+        {
+            CanEnter = false;
+            _currentAttempt = Attempts[_countOfAttempts];
+            return AttemptStatus.CanRepeat;
+        }
+
+        CanEnter = CanRemove = false;
+
+        return AttemptStatus.Lose;
+    }
+
+    private IReadOnlyList<LetterState> UpdateCells()
+    {
         var states = _wordsManager.TryGuess(_currentAttempt.Word);
-        var isGuessed = states.All(x => x.Status == BL.Models.LetterStatus.Guessed);
 
         foreach (var (current, updated) in _currentAttempt.Letters.Zip(states))
         {
             current.CellStyle = CellStyleMapper.Map(updated.Status);
         }
 
-        var attemptStatus = isGuessed switch
-        {
-            true => AttemptStatus.Win,
-            _ when _countOfAttempts < Attempts.Count => AttemptStatus.CanRepeat,
-            _ => AttemptStatus.Lose
-        };
-
-        if (attemptStatus == AttemptStatus.CanRepeat)
-        {
-            _currentAttempt = Attempts[_countOfAttempts];
-        }
-
-        return attemptStatus;
+        return states;
     }
 
     public bool NextWord()
