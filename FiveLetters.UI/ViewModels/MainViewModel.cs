@@ -67,25 +67,29 @@ internal sealed class MainViewModel : BindableBase
         _gameProcessor.RemoveLetter();
     }
 
-    private void EnterClicked()
+    private async void EnterClicked()
     {
-        var attemptStatus = _gameProcessor.CheckWord();
+        Execute(() =>
+        {
+            var attemptStatus = _gameProcessor.CheckWord();
 
-        if (attemptStatus == AttemptStatus.Win)
-        {
-            InfoBox.ShowWin();
-        }
-        else if (attemptStatus == AttemptStatus.Lose)
-        {
-            InfoBox.ShowLose();
-        }
-        else if (attemptStatus != AttemptStatus.CanRepeat)
-        {
-            if (!_gameProcessor.NextWord())
+            if (attemptStatus == AttemptStatus.Win)
             {
-                InfoBox.ShowEnd();
+                InfoBox.ShowWin();
             }
-        }
+            else if (attemptStatus == AttemptStatus.Lose)
+            {
+                InfoBox.ShowLose();
+            }
+
+            if (attemptStatus != AttemptStatus.CanRepeat)
+            {
+                if (!_gameProcessor.NextWord())
+                {
+                    InfoBox.ShowEnd();
+                }
+            }
+        });
     }
 
     private async Task OpenSettings()
@@ -112,6 +116,15 @@ internal sealed class MainViewModel : BindableBase
         IsUploading = true;
 
         await task();
+
+        IsUploading = false;
+    }
+
+    private async void Execute(Action task)
+    {
+        IsUploading = true;
+
+        task();
 
         IsUploading = false;
     }
