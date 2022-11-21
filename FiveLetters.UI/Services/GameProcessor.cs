@@ -117,7 +117,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             .Select(x => new RequestedWord(_settings.LettersCount))
             .ToList();
 
-        _currentAttempt = Attempts[0];
+        _countOfAttempts = 0;
+        _currentAttempt = Attempts[_countOfAttempts];
 
         CanRemove = true;
         CanEnter = false;

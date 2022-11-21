@@ -2,6 +2,8 @@
 using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
 using FiveLetters.UI.Services.Interfaces;
+using System;
+using System.CodeDom.Compiler;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -32,7 +34,7 @@ internal sealed class MainViewModel : BindableBase
     public ICommand RemoveClickedCoommand { get; }
     public ICommand EnterClickedCommand { get; }
 
-    public ICommand OpenRatesCommand { get; }
+    public ICommand ResetCommand { get; }
     public ICommand OpenSettingsCommand { get; }
     public ICommand OpenHelpCommand { get; }
 
@@ -51,6 +53,7 @@ internal sealed class MainViewModel : BindableBase
         RemoveClickedCoommand = new DelegateCommand(RemoveClicked);
         EnterClickedCommand = new DelegateCommand(EnterClicked);
 
+        ResetCommand = new AsyncCommand(RefreshView);
         OpenSettingsCommand = new AsyncCommand(OpenSettings);
     }
 
@@ -70,7 +73,7 @@ internal sealed class MainViewModel : BindableBase
 
         if (attemptStatus != AttemptStatus.CanRepeat)
         {
-            
+
         }
 
         if (attemptStatus == AttemptStatus.Win)
@@ -85,21 +88,29 @@ internal sealed class MainViewModel : BindableBase
 
     private async Task OpenSettings()
     {
-        IsUploading = true;
-
-        var result = _dialogService.ShowDialog(Settings);
-        if (result is not null)
+        await Execute(async () =>
         {
-            Settings = result;
+            var result = _dialogService.ShowDialog(Settings);
+            if (result is not null)
+            {
+                Settings = result;
 
-            await RefreshView();
-        }
-
-        IsUploading = false;
+                await RefreshView();
+            }
+        });
     }
 
     private async Task RefreshView()
     {
-        await _gameProcessor.ReloadWords(Settings);
+        await Execute(() => _gameProcessor.ReloadWords(Settings));
+    }
+
+    private async Task Execute(Func<Task> task)
+    {
+        IsUploading = true;
+
+        await task();
+
+        IsUploading = false;
     }
 }
