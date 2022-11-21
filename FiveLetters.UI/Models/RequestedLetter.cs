@@ -2,7 +2,7 @@
 
 namespace FiveLetters.UI.Models;
 
-internal class RequestedLetter : BindableBase
+internal sealed class RequestedLetter : BindableBase
 {
     public CellStyle CellStyle
     {

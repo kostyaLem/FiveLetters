@@ -47,80 +47,103 @@
             <hc:LoadingIndicator Style="{StaticResource LoadingIndicatorArcsStyle}" />
         </Border>
 
-        <StackPanel
-            Grid.Row="0"
-            Margin="10"
-            Orientation="Horizontal">
-            <StackPanel.Resources>
-                <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
-                    <Setter Property="Margin" Value="1" />
-                    <Setter Property="FontWeight" Value="DemiBold" />
-                    <Setter Property="FontFamily" Value="Bahnschrift" />
-                    <Setter Property="FontSize" Value="22" />
-                    <Setter Property="Width" Value="40" />
-                    <Setter Property="Height" Value="40" />
-                    <Setter Property="Padding" Value="0,3,0,0" />
-                    <Setter Property="Foreground" Value="Black" />
-                    <Setter Property="Background" Value="#FFF0D900" />
-                </Style>
-            </StackPanel.Resources>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
 
-            <Label Content="{Binding Settings.LettersCount, FallbackValue=5}" />
-            <Label Content="Б" />
-            <Label Content="У" />
-            <Label Content="К" />
-            <Label Content="В" />
-        </StackPanel>
+            <StackPanel
+                Grid.Column="0"
+                Margin="10"
+                Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                        <Setter Property="Margin" Value="1" />
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontFamily" Value="Bahnschrift" />
+                        <Setter Property="FontSize" Value="22" />
+                        <Setter Property="Width" Value="40" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="Padding" Value="0,3,0,0" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Background" Value="#FFF0D900" />
+                    </Style>
+                </StackPanel.Resources>
 
-        <StackPanel
-            Grid.Row="0"
-            Margin="10"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <StackPanel.Resources>
-                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Width" Value="40" />
-                    <Setter Property="Height" Value="40" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Margin" Value="1" />
-                </Style>
-            </StackPanel.Resources>
+                <Label Content="{Binding Settings.LettersCount, FallbackValue=5}" />
+                <Label Content="Б" />
+                <Label Content="У" />
+                <Label Content="К" />
+                <Label Content="В" />
+            </StackPanel>
 
-            <Button
-                Width="32"
-                Height="32"
-                Padding="0"
-                Command="{Binding ResetCommand}"
-                ToolTip="Сбросить">
-                <Image
-                    Width="28"
-                    Height="28"
-                    Source="{StaticResource ResetImage}" />
-            </Button>
-            <Button
-                Width="32"
-                Height="32"
-                Padding="0"
-                Command="{Binding OpenSettingsCommand}"
-                ToolTip="Настройки">
-                <Image
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="22">
+                <Run Foreground="DarkGreen" Text="{Binding GameState.Score.Win}" />
+                <Run FontSize="18" Text=":" />
+                <Run Foreground="DarkRed" Text="{Binding GameState.Score.Lose}" />
+                <Run FontSize="18" Text=":" />
+                <Run Foreground="WhiteSmoke" Text="{Binding GameState.Score.Total}" />
+            </TextBlock>
+
+            <StackPanel
+                Grid.Column="2"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Width" Value="40" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Margin" Value="1" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button
                     Width="32"
                     Height="32"
-                    Source="{StaticResource ConfigImage}" />
-            </Button>
-            <Button
-                Width="32"
-                Height="32"
-                Padding="0"
-                ToolTip="Правила">
-                <Image
+                    Padding="0"
+                    Command="{Binding ResetCommand}"
+                    ToolTip="Сбросить">
+                    <Image
+                        Width="28"
+                        Height="28"
+                        Source="{StaticResource ResetImage}" />
+                </Button>
+                <Button
                     Width="32"
                     Height="32"
-                    Source="{StaticResource HelpImage}" />
-            </Button>
+                    Padding="0"
+                    Command="{Binding OpenSettingsCommand}"
+                    ToolTip="Настройки">
+                    <Image
+                        Width="32"
+                        Height="32"
+                        Source="{StaticResource ConfigImage}" />
+                </Button>
+                <Button
+                    Width="32"
+                    Height="32"
+                    Padding="0"
+                    ToolTip="Правила">
+                    <Image
+                        Width="32"
+                        Height="32"
+                        Source="{StaticResource HelpImage}" />
+                </Button>
 
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+
+
+
 
         <ItemsControl
             Grid.Row="1"

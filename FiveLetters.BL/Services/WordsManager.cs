@@ -13,6 +13,8 @@ public sealed class WordsManager
     private Queue<string> _wordsQueue;
     private string _currentWord;
 
+    public int WordsCount => _wordsQueue.Count;
+
     public WordsManager(WordReader wordReader)
     {
         _wordReader = wordReader;

@@ -19,6 +19,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
     private RequestedWord _currentAttempt;
     private Settings _settings;
 
+    public Score Score { get; }
+
     public bool CanEnter
     {
         get => GetValue<bool>(nameof(CanEnter));
@@ -40,6 +42,8 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
     public GameProcessor(WordsManager wordsManager)
     {
         _wordsManager = wordsManager;
+
+        Score = new Score();
     }
 
     public void AddLetter(char letter)
@@ -65,6 +69,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         if (states.All(x=>x.Status == LetterStatus.Guessed))
         {
             CanEnter = CanRemove = false;
+            Score.Win++;
             return AttemptStatus.Win;
         }
 
@@ -75,6 +80,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             return AttemptStatus.CanRepeat;
         }
 
+        Score.Lose++;
         CanEnter = CanRemove = false;
 
         return AttemptStatus.Lose;
@@ -97,6 +103,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         if (_wordsManager.MoveNext())
         {
             Reset();
+            Score.Total--;
             return true;
         }
 
@@ -108,6 +115,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         _settings = settings;
         await _wordsManager.ResetSettings(SettingsMapper.Map(settings));
 
+        Score.Reset(_wordsManager.WordsCount);
         Reset();
     }
 

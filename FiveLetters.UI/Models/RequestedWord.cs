@@ -11,13 +11,6 @@ internal class RequestedWord
 
     public string Word => new string(Letters.Select(x => x.SelectedLetter ?? '\0').ToArray()); // TODO: fix
 
-    // For debug
-    public RequestedWord()
-    {
-        var letters = Enumerable.Range(0, 7).Select(x => new RequestedLetter());
-        Letters = new ObservableCollection<RequestedLetter>(letters);
-    }
-
     public RequestedWord(int wordLength)
     {
         var letters = Enumerable.Range(0, wordLength).Select(x => new RequestedLetter());
