@@ -63,24 +63,27 @@ public sealed class WordsManager
 
         foreach (var (attemptCh, currentCh) in word.Zip(_currentWord))
         {
-            var letterStatus = LetterStatus.Wrong;
-
             if (attemptCh == currentCh)
             {
-                letterStatus = LetterStatus.Guessed;
+                states.Add(new(attemptCh, LetterStatus.Guessed));
             }
-            else if (_currentWord.Contains(attemptCh))
+            else if (!_currentWord.Contains(attemptCh))
             {
-                var existingCount = states.Count(x => x.Ch == currentCh);
-                var totalCount = _currentWord.Count(x => x == currentCh);
-
-                if (existingCount < totalCount)
-                {
-                    letterStatus = LetterStatus.Nearly;
-                }
+                states.Add(new(attemptCh, LetterStatus.Wrong));
             }
+            else
+            {
+                states.Add(new(attemptCh, LetterStatus.NotGuessed));
+            }
+        }
 
-            states.Add(new(currentCh, letterStatus));
+        foreach (var state in states.Where(x => x.Status == LetterStatus.NotGuessed))
+        {
+            var existingCount = states.Count(x => x.Ch == state.Ch 
+                && x.Status == LetterStatus.Guessed || x.Status == LetterStatus.Nearly);
+            var totalCount = _currentWord.Count(x => x == state.Ch);
+
+            state.Status = existingCount < totalCount ? LetterStatus.Nearly : LetterStatus.Wrong;
         }
 
         return states;
