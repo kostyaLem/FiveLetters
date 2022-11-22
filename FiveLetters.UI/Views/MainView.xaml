@@ -79,17 +79,44 @@
                 <Label Content="В" />
             </StackPanel>
 
-            <TextBlock
+            <StackPanel
                 Grid.Column="1"
+                Margin="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="22">
-                <Run Foreground="DarkGreen" Text="{Binding GameState.Score.Win}" />
-                <Run FontSize="18" Text=":" />
-                <Run Foreground="DarkRed" Text="{Binding GameState.Score.Lose}" />
-                <Run FontSize="18" Text=":" />
-                <Run Foreground="WhiteSmoke" Text="{Binding GameState.Score.Total}" />
-            </TextBlock>
+                Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                        <Setter Property="Margin" Value="3" />
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontFamily" Value="Bahnschrift" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="Width" Value="35" />
+                        <Setter Property="Foreground" Value="WhiteSmoke" />
+                        <Setter Property="Height" Value="35" />
+                        <Setter Property="Padding" Value="0,3,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label
+                    d:Content="5"
+                    BorderBrush="DarkGreen"
+                    BorderThickness="3,0,0,3"
+                    Content="{Binding GameState.Score.Win}"
+                    ToolTip="Угадано" />
+                <Label
+                    d:Content="2"
+                    BorderBrush="DarkRed"
+                    BorderThickness="3,0,0,3"
+                    Content="{Binding GameState.Score.Lose}"
+                    ToolTip="Не угадано" />
+                <Label
+                    d:Content="15"
+                    BorderBrush="Gray"
+                    BorderThickness="3,0,0,3"
+                    Content="{Binding GameState.Score.Total}"
+                    ToolTip="Осталось" />
+            </StackPanel>
 
             <StackPanel
                 Grid.Column="2"

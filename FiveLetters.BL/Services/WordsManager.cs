@@ -25,6 +25,7 @@ public sealed class WordsManager
         var words = await _wordReader.ReadWords(settings);
         var shakedWords = words.OrderBy(x => _rnd.Next());
 
+        _currentWord = default;
         _wordsQueue = new Queue<string>(shakedWords);
 
         if (_wordsQueue.TryDequeue(out var word))
