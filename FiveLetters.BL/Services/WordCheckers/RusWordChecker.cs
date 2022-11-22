@@ -1,5 +1,8 @@
 ﻿namespace FiveLetters.BL.Services;
 
+/// <summary>
+/// Класс для проверки букв русского алфавита
+/// </summary>
 internal class RusWordChecker : IWordChecker
 {
     public bool CheckWord(string word, int lettersCount)

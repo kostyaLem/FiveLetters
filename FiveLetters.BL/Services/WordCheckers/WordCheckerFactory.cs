@@ -2,6 +2,9 @@
 
 namespace FiveLetters.BL.Services;
 
+/// <summary>
+/// Класс для создания определённого объекта проверки алфавита
+/// </summary>
 internal static class WordCheckerFactory
 {
     public static IWordChecker CreateChecker(LangMode langMode)
