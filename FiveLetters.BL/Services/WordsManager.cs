@@ -83,7 +83,7 @@ public sealed class WordsManager
         foreach (var state in states.Where(x => x.Status == LetterStatus.NotGuessed))
         {
             var existingCount = states.Count(x => x.Ch == state.Ch 
-                && x.Status == LetterStatus.Guessed || x.Status == LetterStatus.Nearly);
+                && (x.Status == LetterStatus.Guessed || x.Status == LetterStatus.Nearly));
             var totalCount = _currentWord.Count(x => x == state.Ch);
 
             state.Status = existingCount < totalCount ? LetterStatus.Nearly : LetterStatus.Wrong;
