@@ -8,5 +8,4 @@
   > WPF, HandyControl
 - #### Дополнительно:
   > Нестандартный дизайн, режим игры для английских слов
-
-![image](https://user-images.githubusercontent.com/12397015/203385427-61c10e31-2037-4535-bb42-21a3992be045.png=250x250)
+<img src="https://user-images.githubusercontent.com/12397015/203385427-61c10e31-2037-4535-bb42-21a3992be045.png" width="490" height="500" />
