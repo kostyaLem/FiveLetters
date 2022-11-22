@@ -241,7 +241,7 @@
 
         </ItemsControl>
 
-        <StackPanel Grid.Row="2">
+        <StackPanel Grid.Row="2" IsEnabled="{Binding GameState.CanInput}">
             <controls:CustomKeyboard
                 EnterButtonEnabled="{Binding GameState.CanEnter}"
                 LangMode="{Binding Settings.LangMode, Mode=OneWay}"

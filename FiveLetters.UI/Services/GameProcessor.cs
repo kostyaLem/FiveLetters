@@ -21,6 +21,12 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
     public Score Score { get; }
 
+    public bool CanInput
+    {
+        get => GetValue<bool>(nameof(CanInput));
+        set => SetValue(value, nameof(CanInput));
+    }
+
     public bool CanEnter
     {
         get => GetValue<bool>(nameof(CanEnter));
@@ -130,5 +136,6 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
 
         CanRemove = true;
         CanEnter = false;
+        CanInput = _wordsManager.WordsCount > 0;
     }
 }
