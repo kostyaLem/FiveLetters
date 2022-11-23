@@ -48,7 +48,7 @@
         <StackPanel>
             <Label HorizontalAlignment="Left" Content="Язык слов в игре:" />
             <ToggleButton
-                Margin="0,15,0,5"
+                Margin="10,15,0,5"
                 HorizontalAlignment="Left"
                 IsChecked="{Binding LangMode, Converter={converters:BoolToLangModeEnumConverter}}">
                 <ToggleButton.Style>

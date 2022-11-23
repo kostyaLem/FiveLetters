@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources\ImageDictionary.xaml" />
-                <hc:ThemeResources AccentColor="Red" RequestedTheme="Dark" />
+                <hc:ThemeResources AccentColor="#FF9B8C01" RequestedTheme="Dark" />
                 <hc:Theme />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
