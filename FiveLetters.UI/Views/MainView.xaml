@@ -159,6 +159,7 @@
                     Width="32"
                     Height="32"
                     Padding="0"
+                    Command="{Binding OpenHelpCommand}"
                     ToolTip="Правила">
                     <Image
                         Width="32"
@@ -168,9 +169,6 @@
 
             </StackPanel>
         </Grid>
-
-
-
 
         <ItemsControl
             Grid.Row="1"

@@ -3,6 +3,7 @@ using FiveLetters.UI.Controls;
 using FiveLetters.UI.Models;
 using FiveLetters.UI.Services;
 using FiveLetters.UI.Services.Interfaces;
+using FiveLetters.UI.Views;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -55,6 +56,7 @@ internal sealed class MainViewModel : BindableBase
 
         ResetCommand = new AsyncCommand(RefreshView);
         OpenSettingsCommand = new AsyncCommand(OpenSettings);
+        OpenHelpCommand = new DelegateCommand(OpenHelp);
     }
 
     private void LettersClicked(LetterRoutedEventArgs args)
@@ -103,6 +105,14 @@ internal sealed class MainViewModel : BindableBase
 
                 await RefreshView();
             }
+        });
+    }
+
+    private void OpenHelp()
+    {
+        Execute(() =>
+        {
+            new AboutView().ShowDialog();
         });
     }
 
