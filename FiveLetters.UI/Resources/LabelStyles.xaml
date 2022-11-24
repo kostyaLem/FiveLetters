@@ -5,10 +5,9 @@
         TargetType="Label">
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="FontFamily" Value="Bahnschrift" />
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="Width" Value="40" />
         <Setter Property="Height" Value="40" />
-        <Setter Property="Padding" Value="0,3,0,0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
