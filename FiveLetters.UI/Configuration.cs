@@ -5,24 +5,26 @@ using FiveLetters.UI.Services;
 using FiveLetters.UI.Services.Interfaces;
 using FiveLetters.UI.ViewModels;
 using FiveLetters.UI.Views;
-using HandyControl.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace FiveLetters.UI;
 
+/// <summary>
+/// Класс для регистрации типов в программе
+/// </summary>
 public static class Configuration
 {
+    // Регистрация сервисов для автоматического создания в контейнере
     public static void SetupServices(this IServiceCollection serviceSollection)
     {
         serviceSollection.AddSingleton<MainViewModel>();
         serviceSollection.AddSingleton<SettingsViewModel>();
 
         serviceSollection.AddSingleton<MainView>();
-        serviceSollection.AddSingleton<WordsManager>(); //TODO: перенести в BL
-        serviceSollection.AddSingleton<WordReader>();   //TODO: перенести в BL
+        serviceSollection.AddSingleton<WordsManager>();
+        serviceSollection.AddSingleton<WordReader>();  
         serviceSollection.AddTransient<SettingsView>();
 
         serviceSollection.AddTransient<ISettingsService, SettingsService>();

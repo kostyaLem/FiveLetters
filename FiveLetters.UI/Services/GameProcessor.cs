@@ -10,35 +10,48 @@ using System.Threading.Tasks;
 
 namespace FiveLetters.UI.Services;
 
-internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
+/// <summary>
+/// Класс для управления ходом игры
+/// </summary>
+internal sealed class GameProcessor : BindableBase, IGameProcessor
 {
+    // Кол-во попыток на отгадывание
     private const int _totalAttempts = 6;
+    // Текущее кол-во попыток
     private int _countOfAttempts = 0;
 
+    // Сервис для управления словами
     private readonly WordsManager _wordsManager;
+    // Текущее слово для заполнения на интерфейсе
     private RequestedWord _currentAttempt;
+    // Последние настройки игры
     private Settings _settings;
 
+    // Очки игры
     public Score Score { get; }
 
+    // Флаг доступа нажатия клавиатуру
     public bool CanInput
     {
         get => GetValue<bool>(nameof(CanInput));
         set => SetValue(value, nameof(CanInput));
     }
 
+    // Флаг доступа нажатия на кнопку Enter
     public bool CanEnter
     {
         get => GetValue<bool>(nameof(CanEnter));
         set => SetValue(value, nameof(CanEnter));
     }
 
+    // Флаг доступа нажатия на кнопку удаления буквы
     public bool CanRemove
     {
         get => GetValue<bool>(nameof(CanRemove));
         set => SetValue(value, nameof(CanRemove));
     }
 
+    // Список строк-слов на интерфейсе
     public IReadOnlyList<RequestedWord> Attempts
     {
         get => GetValue<IReadOnlyList<RequestedWord>>(nameof(Attempts));
@@ -52,6 +65,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         Score = new Score();
     }
 
+    // Добавить символ в слово
     public void AddLetter(char letter)
     {
         _currentAttempt.SetLetter(letter);
@@ -59,6 +73,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         CanEnter = _currentAttempt.IsFinished;
     }
 
+    // Удалить символ из слова
     public void RemoveLetter()
     {
         _currentAttempt.RemoveLetter();
@@ -66,12 +81,16 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         CanEnter = _currentAttempt.IsFinished;
     }
 
+    // Сравнить введённое слово
     public AttemptStatus CheckWord()
     {
+        // Увеличить кол-во попыток
         _countOfAttempts++;
 
+        // Получить состояние выбранных букв
         var states = UpdateCells();
 
+        // Вывести результат попытки
         if (states.All(x=>x.Status == LetterStatus.Guessed))
         {
             CanEnter = CanRemove = false;
@@ -86,12 +105,14 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
             return AttemptStatus.CanRepeat;
         }
 
+        // Обновить статистику и доступность кнопок
         Score.Lose++;
         CanEnter = CanRemove = false;
 
         return AttemptStatus.Lose;
     }
 
+    // Получить результат проверки букв и обновить статусы ячеек с буквами на UI
     private IReadOnlyList<LetterState> UpdateCells()
     {
         var states = _wordsManager.TryGuess(_currentAttempt.Word);
@@ -104,6 +125,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         return states;
     }
 
+    // Перейти к следующему слову
     public bool NextWord()
     {
         if (_wordsManager.MoveNext())
@@ -116,6 +138,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         return false;
     }
 
+    // Загрузить слова в соответствии с настройками
     public async Task ReloadWords(Settings settings)
     {
         _settings = settings;
@@ -125,6 +148,7 @@ internal sealed class GameProcessor : BindableBase, IGameState, IGameProcessor
         Reset();
     }
 
+    // Сбросить игру и начать заново
     private void Reset()
     {
         Attempts = Enumerable.Range(0, _totalAttempts)

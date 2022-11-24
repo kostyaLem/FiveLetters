@@ -3,6 +3,10 @@ using HandyControl.Data;
 
 namespace FiveLetters.UI.Services;
 
+/// <summary>
+/// Статический класс с подготовленными диалоговыми окнами
+/// для отображения результатов игры
+/// </summary>
 internal static class InfoBox
 {
     public static void ShowWin()

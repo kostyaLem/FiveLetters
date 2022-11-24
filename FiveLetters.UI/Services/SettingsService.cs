@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FiveLetters.UI.Services;
 
+/// <summary>
+/// Вспомогательный класс для отображения окна с настройками программы
+/// </summary>
 internal sealed class SettingsService : ISettingsService
 {
     public Settings ShowDialog(Settings settings)
@@ -20,6 +23,7 @@ internal sealed class SettingsService : ISettingsService
 
         if (settingsViewModel.IsChanged(settings))
         {
+            // Вернуть новые настройки, если были изменения
             return new Settings
             {
                 FilePath = new System.Uri(settingsViewModel.FilePath, System.UriKind.Absolute),

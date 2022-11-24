@@ -10,33 +10,48 @@ using System.Windows.Input;
 
 namespace FiveLetters.UI.ViewModels;
 
+/// <summary>
+/// Модель для представления MainView.xaml
+/// </summary>
 internal sealed class MainViewModel : BindableBase
 {
+    // Сервис для работы с настройками
     private readonly ISettingsService _dialogService;
+    // Сервис управления ходом игры
     private readonly IGameProcessor _gameProcessor;
 
+    // Попытки пользователя
     public IGameState GameState => _gameProcessor;
 
+    // Индикатор отображения лоадера
     public bool IsUploading
     {
         get => GetValue<bool>(nameof(IsUploading));
         set => SetValue(value, nameof(IsUploading));
     }
 
+    // Настройки игры
     public Settings Settings
     {
         get => GetValue<Settings>(nameof(Settings));
         set => SetValue(value, nameof(Settings));
     }
 
+    // Команда, вызывающаяся при открытии окна игры
     public ICommand LoadViewDataCommand { get; }
 
+    // Команда нажатия на кнопку
     public ICommand LettersClickedCommand { get; }
+    // Команда нажатия на кнопку удаления буквы
     public ICommand RemoveClickedCoommand { get; }
+    // Команда нажатия на кнопку ввода слова
     public ICommand EnterClickedCommand { get; }
 
+    // Команда сброса игры в начальное состояние
     public ICommand ResetCommand { get; }
+    // Команда открытия настроек игры
     public ICommand OpenSettingsCommand { get; }
+    // Команда открытия справки об игре
     public ICommand OpenHelpCommand { get; }
 
     public MainViewModel(
@@ -59,22 +74,27 @@ internal sealed class MainViewModel : BindableBase
         OpenHelpCommand = new DelegateCommand(OpenHelp);
     }
 
+    // Обработка команды нажатия на кнопку
     private void LettersClicked(LetterRoutedEventArgs args)
     {
         _gameProcessor.AddLetter(args.Letter);
     }
 
+    // Обработка команды нажатия на кнопку удаления буквы
     private void RemoveClicked()
     {
         _gameProcessor.RemoveLetter();
     }
 
+    // Обработка команды нажатия на кнопку ввода слова
     private async void EnterClicked()
     {
         Execute(() =>
         {
+            // Получить результат проверки введённых букв
             var attemptStatus = _gameProcessor.CheckWord();
 
+            // Отобразить результат обраотки
             if (attemptStatus == AttemptStatus.Win)
             {
                 InfoBox.ShowWin();
@@ -94,6 +114,7 @@ internal sealed class MainViewModel : BindableBase
         });
     }
 
+    // Обработка команды открытия настроек игры
     private async Task OpenSettings()
     {
         await Execute(async () =>
@@ -108,6 +129,7 @@ internal sealed class MainViewModel : BindableBase
         });
     }
 
+    // Обработка команды открытия окна со справкой
     private void OpenHelp()
     {
         Execute(() =>
@@ -116,11 +138,13 @@ internal sealed class MainViewModel : BindableBase
         });
     }
 
+    // Обработка команды сброса игры в начальное состояние
     private async Task RefreshView()
     {
         await Execute(() => _gameProcessor.ReloadWords(Settings));
     }
 
+    // Вспомогательный метод для выполнения асинхронных методов
     private async Task Execute(Func<Task> task)
     {
         IsUploading = true;
@@ -130,6 +154,7 @@ internal sealed class MainViewModel : BindableBase
         IsUploading = false;
     }
 
+    // Вспомогательный метод для выполнения синхронных методов
     private async void Execute(Action task)
     {
         IsUploading = true;
