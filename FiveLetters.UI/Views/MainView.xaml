@@ -206,7 +206,7 @@
                                         VerticalAlignment="Stretch"
                                         BorderThickness="0"
                                         Content="{Binding SelectedLetter}"
-                                        FontSize="14"
+                                        FontSize="16"
                                         FontWeight="Bold">
                                         <Label.Style>
                                             <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
