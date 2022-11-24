@@ -17,4 +17,4 @@
 <img src="https://user-images.githubusercontent.com/12397015/203851380-9570b1aa-8f4b-4fd2-9346-a3c81421e21a.png" />
 
 <h4>Справка об игре:</h4>
-<img src="https://user-images.githubusercontent.com/12397015/203851481-46e982c3-2037-4338-ab8f-9ea7e4781979.png" />
+<img src="https://user-images.githubusercontent.com/12397015/203852350-02d7da4f-b062-4c7c-829b-82817329516f.png" />
