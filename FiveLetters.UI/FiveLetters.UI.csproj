@@ -18,6 +18,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Page Remove="Resources\LabelStyles.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Content Include="icon.ico" />
 	</ItemGroup>
 
@@ -41,6 +45,7 @@
 	  <Resource Include="Resources\Images\folder.png" />
 	  <Resource Include="Resources\Images\help.png" />
 	  <Resource Include="Resources\Images\icon.ico" />
+	  <Resource Include="Resources\LabelStyles.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>

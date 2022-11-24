@@ -17,6 +17,13 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Resources\LabelStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <hc:Window.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding RemoveClickedCoommand}" />
@@ -59,17 +66,7 @@
                 Margin="10"
                 Orientation="Horizontal">
                 <StackPanel.Resources>
-                    <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
-                        <Setter Property="Margin" Value="1" />
-                        <Setter Property="FontWeight" Value="DemiBold" />
-                        <Setter Property="FontFamily" Value="Bahnschrift" />
-                        <Setter Property="FontSize" Value="22" />
-                        <Setter Property="Width" Value="40" />
-                        <Setter Property="Height" Value="40" />
-                        <Setter Property="Padding" Value="0,3,0,0" />
-                        <Setter Property="Foreground" Value="Black" />
-                        <Setter Property="Background" Value="#FFF0D900" />
-                    </Style>
+                    <Style BasedOn="{StaticResource GuessedLabelStyle}" TargetType="Label" />
                 </StackPanel.Resources>
 
                 <Label Content="{Binding Settings.LettersCount, FallbackValue=5}" />
