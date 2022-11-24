@@ -4,6 +4,9 @@ using System;
 
 namespace FiveLetters.UI.Mappers;
 
+/// <summary>
+/// Маппер статуса буквы из BL в UI слой
+/// </summary>
 internal static class CellStyleMapper
 {
     public static CellStyle Map(this LetterStatus letterStatus)

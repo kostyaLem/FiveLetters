@@ -2,6 +2,9 @@
 
 namespace FiveLetters.UI.Mappers;
 
+/// <summary>
+/// Маппер выбранного языка из UI в BL слой
+/// </summary>
 internal static class LangModeMapper
 {
     public static BL.Models.Settings.LangMode Map(this Models.LangMode langMode)

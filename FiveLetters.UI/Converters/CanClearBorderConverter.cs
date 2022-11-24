@@ -6,6 +6,9 @@ using System.Windows.Markup;
 
 namespace FiveLetters.UI.Converters;
 
+/// <summary>
+/// Конвертер для очистки стиля буквы, если её состояние поменялось с начального на другое
+/// </summary>
 public class CanClearBorderConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
