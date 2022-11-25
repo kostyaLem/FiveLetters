@@ -78,7 +78,7 @@ public sealed class WordsManager
         }
     }
 
-    // Проверить поытку и вернуть состояние каждой буквы
+    // Проверить попытку и вернуть состояние каждой буквы
     private IReadOnlyList<LetterState> CheckGuess(string word)
     {
         var states = new List<LetterState>();
@@ -129,7 +129,7 @@ public sealed class WordsManager
         // 0 - Правильно
         // 1 - Правильно
         // 2 - Неправильно, так как больше букв А в слове нет
-        // 3 - Правильно, но на другой позции
+        // 3 - Правильно, но на другой позиции
         // 4 - Правильно, но на другой позиции
     }
 }
