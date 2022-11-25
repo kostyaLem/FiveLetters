@@ -78,6 +78,7 @@ public sealed class WordsManager
         }
     }
 
+    // Проверить поытку и вернуть состояние каждой буквы
     private IReadOnlyList<LetterState> CheckGuess(string word)
     {
         var states = new List<LetterState>();
