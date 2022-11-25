@@ -12,6 +12,7 @@
   
 <h4>Главное окно игры:</h4>
 <img src="https://user-images.githubusercontent.com/12397015/203851206-c27b3211-691e-42da-bbc1-8b0a4f25d6f3.png" width="490" height="500" />
+<img src="https://user-images.githubusercontent.com/12397015/204055482-a2ea8523-4564-40b7-a05e-e9a97ec41553.jpg" width="490" height="500" />
 
 <h4>Настройки игры:</h4>
 <img src="https://user-images.githubusercontent.com/12397015/203851380-9570b1aa-8f4b-4fd2-9346-a3c81421e21a.png" />
